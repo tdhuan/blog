@@ -9,18 +9,25 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check": "astro check",
+    "check:watch": "astro check --watch"
   },
   "dependencies": {
+    "@astrojs/ts-plugin": "^1.10.10",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.1.6",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@typescript-eslint/parser": "8.67.0",
+    "astro-eslint-parser": "3.0.0",
     "eslint": "^10.8.1",
     "eslint-plugin-astro": "^3.1.0",
     "prettier": "3.9.6",
     "prettier-plugin-astro": "0.14.1",
-    "prettier-plugin-tailwindcss": "0.8.1"
+    "prettier-plugin-tailwindcss": "0.8.1",
+    "typescript": "^6.0.3"
   }
 }
