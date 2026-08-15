@@ -1,11 +1,20 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "@/layouts/Layout.astro";
+import Hero from "@/components/Hero.astro";
+import PostCard from "@/components/PostCard.astro";
+import ArrowLink from "@/components/ArrowLink.astro";
 ---
 
-<Layout>
-	<Welcome />
+<Layout bodyClass="font-headline">
+  <Hero />
+  <section class="container-page pt-12 pb-32">
+    <div class="divide-outline-variant/30 flex flex-col divide-y">
+      <PostCard />
+      <PostCard />
+      <PostCard />
+      <div class="flex justify-center pt-12">
+        <ArrowLink href="/blog">Read all posts</ArrowLink>
+      </div>
+    </div>
+  </section>
 </Layout>

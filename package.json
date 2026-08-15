@@ -11,7 +11,9 @@
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",
-    "check:watch": "astro check --watch"
+    "check:watch": "astro check --watch",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check"
   },
   "dependencies": {
     "@astrojs/ts-plugin": "^1.10.10",

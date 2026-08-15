@@ -1,22 +1,65 @@
-## Development
+# AGENTS.md
 
-When starting the dev server, use background mode:
+Guidance for Claude Code and other coding agents working in this repository.
 
-```
-astro dev --background
-```
+## Commands
 
-Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
+Package manager is pnpm (workspace enabled via pnpm-workspace.yaml). Node >= 22.12.0.
 
-## Documentation
+- `pnpm dev` — start dev server in background mode (manage with `astro dev stop`, `astro dev status`, `astro dev logs`)
+- `pnpm build` — production build
+- `pnpm preview` — preview the built site
+- `pnpm check` — type-check (`astro check`; there is no test suite)
+- `pnpm exec eslint .` — lint
+- `pnpm exec prettier . --write` — format (Prettier plugins: astro, tailwindcss class sorting)
+
+## Skills
+
+When implementing UI:
+
+- Use `frontend-ui-engineering` for visual design, component architecture,
+  accessibility, responsive behavior, interaction patterns, and UI quality.
+
+When implementing Astro-specific code:
+
+- Use `astro-development` for Astro architecture and `.astro` components.
+- Use `astro-content` for content collections, Markdown, MDX, and blog posts.
+- Use `astro-routing` for pages, dynamic routes, redirects, middleware, and endpoints.
+- Use `astro-assets` for images, fonts, SVGs, and asset optimization.
+- Use `astro-performance` when the task affects hydration, JavaScript,
+  Core Web Vitals, rendering, or bundle size.
+
+## Architecture
+
+Static Astro site (no SSR, no UI-framework integrations). Everything is `.astro` components:
+
+- `src/pages/` — file-based routing (`index`, `blog`, `notes`, `about`, `cv`). `blog`/`notes` are placeholders; no content collections set up yet.
+- `src/layouts/Layout.astro` — the single layout every page uses. Owns `<head>`, Google Fonts loading, the `Header`/`Footer` chrome, and the fixed noise `background-drop` layer. Takes `title`, `bodyClass`, `bodyStyle`, `mainClass` props.
+- `src/components/` — shared Astro components.
+- Imports use the `@/` alias for `src/*` (configured in tsconfig.json).
+
+### Styling
+
+Tailwind CSS v4 via the Vite plugin (no `tailwind.config` file). The design system lives as `@theme` tokens in `src/styles/global.css`, which is imported once in `Layout.astro`:
+
+- Color tokens — palette (`--color-brown-*`), semantic (`--color-primary`, `--color-surface`, `--color-on-*`, ...), and surface hierarchy (`--color-surface-subtle/muted/elevated/strong`) — use these utilities (e.g. `text-on-background`, `bg-surface-muted`) instead of arbitrary color values.
+- Layout tokens (`--container-page`, `--spacing-margin-*`, `--spacing-gutter`) — e.g. `max-w-page`, `px-margin-mobile lg:px-margin-desktop`.
+- Font tokens (`--font-regular`, `--font-label`, `--font-headline`) — mapped to fonts loaded from Google Fonts in `Layout.astro`.
+
+TypeScript uses the `astro/tsconfigs/strict` preset; ESLint parses `.astro` files with `astro-eslint-parser` + TypeScript parser.
+
+## Workflow
+
+Before modifying code: inspect the existing structure, read relevant components
+and patterns, reuse existing components and utilities, and follow the existing
+architecture.
+
+After implementation: run `pnpm check`, lint/format, and `pnpm build` when
+appropriate.
+
+## Astro documentation
+
+When an Astro API is uncertain or potentially version-dependent, consult the
+Astro Docs MCP rather than relying on memory. Do not invent Astro APIs.
 
 Full documentation: https://docs.astro.build
-
-Consult these guides before working on related tasks:
-
-- [Adding pages, dynamic routes, or middleware](https://docs.astro.build/en/guides/routing/)
-- [Working with Astro components](https://docs.astro.build/en/basics/astro-components/)
-- [Using React, Vue, Svelte, or other framework components](https://docs.astro.build/en/guides/framework-components/)
-- [Adding or managing content](https://docs.astro.build/en/guides/content-collections/)
-- [Adding styles or using Tailwind](https://docs.astro.build/en/guides/styling/)
-- [Supporting multiple languages](https://docs.astro.build/en/guides/internationalization/)

@@ -1,0 +1,8 @@
+# Lock files
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+bun.lock
+
+# TypeScript config
+tsconfig.json
