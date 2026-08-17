@@ -6,7 +6,7 @@
  */
 
 @media print {
-  :root {
+  html:root {
     color-scheme: light;
     --color-background: var(--light-background);
     --color-on-background: var(--light-on-background);
