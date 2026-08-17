@@ -1,0 +1,53 @@
+---
+// Scroll-triggered back-to-top FAB. The sentinel is absolutely positioned at
+// the document top (no positioned ancestors, so it resolves against the
+// initial containing block) and observed with a positive top rootMargin:
+// the root is expanded 400px upward, keeping the sentinel "intersecting"
+// until the page scrolls past that point.
+---
+
+<div id="back-to-top-sentinel" class="absolute top-0 h-px" aria-hidden="true">
+</div>
+
+<a
+  id="back-to-top"
+  href="#top"
+  aria-label="Back to top"
+  class="group border-outline-variant bg-surface-elevated text-on-surface hover:text-primary focus-visible:text-primary invisible fixed right-[calc(1.25rem+env(safe-area-inset-right))] bottom-[calc(1.25rem+env(safe-area-inset-bottom))] z-40 flex size-11 items-center justify-center rounded-none border opacity-0 shadow-md data-[visible]:visible data-[visible]:translate-y-0 data-[visible]:opacity-100 motion-safe:translate-y-2 motion-safe:transition-all motion-safe:duration-300"
+>
+  <svg
+    aria-hidden="true"
+    class="size-4 transition-transform duration-300 group-hover:-translate-y-0.5"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="m5 12 7-7 7 7"></path>
+    <path d="M12 19V5"></path>
+  </svg>
+</a>
+
+<script>
+  const sentinel = document.querySelector<HTMLElement>("#back-to-top-sentinel");
+  const link = document.querySelector<HTMLAnchorElement>("#back-to-top");
+
+  if (sentinel && link) {
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const hasScrolled = !entries[0]?.isIntersecting;
+          link.toggleAttribute("data-visible", hasScrolled);
+        },
+        { rootMargin: "400px 0px 0px 0px" },
+      );
+
+      observer.observe(sentinel);
+    } else {
+      // No IntersectionObserver: always show rather than never.
+      link.setAttribute("data-visible", "");
+    }
+  }
+</script>
