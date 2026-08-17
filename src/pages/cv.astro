@@ -1,54 +1,15 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import { education, experience, profile } from "@/data/cv";
 
-const experience = [
-  {
-    title: "Software Engineer",
-    company: "Camelo",
-    period: "05/2021 — 03/2026",
-    summary:
-      "Contributed to the development and continued improvement of Camelo’s web product and customer-facing sites.",
-    highlights: [
-      "Helped evolve the web application from its early stages into a production product.",
-      "Collaborated with designers to deliver features end to end, from planning and implementation through testing and release",
-      "Built reusable, responsive interface patterns and documented them in Storybook for the team.",
-      "Implemented data-driven interface flows using React and GraphQL.",
-      "Investigated and resolved bugs in the web app.",
-      "Supported teammates with implementation questions and day-to-day development work.",
-    ],
-    stack: [
-      "TypeScript",
-      "React",
-      "Next.js",
-      "GraphQL",
-      "Tailwind CSS",
-      "Headless UI",
-      "TanStack Query",
-      "React Hook Form",
-      "Storybook",
-    ],
-  },
-  {
-    title: "Front End Engineer",
-    company: "Sutrix Solution",
-    period: "12/2020 — 05/2021",
-    summary:
-      "Contributed to the development and continued improvement of Camelo’s web product and customer-facing sites.",
-    highlights: [
-      "Helped evolve the web application from its early stages into a production product.",
-      "Collaborated with designers to deliver features end to end, from planning and implementation through testing and release",
-    ],
-    stack: ["React, Redux"],
-  },
-] as const;
-
-const education = [
-  {
-    institution: "VNUHCM - University of Science",
-    degree: "Bachelor's degree, Information Technology",
-    period: "2015 — 2019",
-  },
-] as const;
+const contactIcons: Record<"email" | "phone" | "github", string> = {
+  email:
+    '<rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>',
+  phone:
+    '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8 9.74a16 16 0 0 0 6 6l1.28-1.28a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92Z"></path>',
+  github:
+    '<path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.18-3.37-1.18-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.54 1.04 1.54 1.04.9 1.53 2.35 1.09 2.92.83.09-.65.35-1.09.64-1.34-2.22-.25-4.56-1.11-4.56-4.95 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02A9.55 9.55 0 0 1 12 6.8c.85 0 1.7.11 2.5.34 1.91-1.3 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.85-2.34 4.7-4.57 4.95.36.31.68.91.68 1.84v2.73c0 .27.18.58.69.48A10 10 0 0 0 12 2Z" fill="currentColor" stroke="none"></path>',
+};
 ---
 
 <Layout title="CV | Huan Tran">
@@ -61,35 +22,40 @@ const education = [
           <p
             class="font-label text-on-background-faint text-xs font-medium tracking-wide uppercase"
           >
-            Front end developer
+            {profile.role}
           </p>
           <h1
             class="font-headline text-primary sm:text-56 lg:text-64 mt-4 text-5xl leading-[0.9] tracking-tight"
           >
-            Huan Tran Dinh
+            {profile.name}
           </h1>
           <p
             class="text-on-background-muted mt-7 max-w-2xl text-base leading-relaxed sm:text-lg"
           >
-            Software engineer interested in building considered digital
-            experiences, useful tools, and the systems that make them last.
+            {profile.summary}
           </p>
 
           <div
             class="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center"
           >
-            <p
-              class="font-label text-on-background-muted flex items-center gap-2 text-xs font-medium tracking-wide uppercase"
+            {
+              profile.openToOpportunities && (
+                <p class="font-label text-on-background-muted flex items-center gap-2 text-xs font-medium tracking-wide uppercase">
+                  <span
+                    aria-hidden="true"
+                    class="bg-primary size-1.5 rounded-full"
+                  />
+                  Open to opportunities
+                </p>
+              )
+            }
+            <button
+              type="button"
+              data-print-cv
+              title="Opens the print dialog — choose “Save as PDF”"
+              class="font-label border-primary/40 text-primary hover:border-primary focus-visible:border-primary no-print inline-flex items-center gap-2 border-b px-0 py-1 text-xs font-medium transition-colors"
             >
-              <span aria-hidden="true" class="bg-primary size-1.5 rounded-full"
-              ></span>
-              Open to opportunities
-            </p>
-            <a
-              class="font-label border-primary/40 text-primary hover:border-primary focus-visible:border-primary inline-flex items-center gap-2 border-b px-0 py-1 text-xs font-medium transition-colors"
-              href="#experience"
-            >
-              View experience
+              Download CV
               <svg
                 aria-hidden="true"
                 class="size-3.5"
@@ -100,71 +66,40 @@ const education = [
                 stroke-linecap="round"
                 stroke-linejoin="round"
               >
-                <path d="M12 5v14"></path>
-                <path d="m19 12-7 7-7-7"></path>
+                <path d="M12 15V3"></path>
+                <path d="m7 10 5 5 5-5"></path>
+                <path d="M19 21H5"></path>
               </svg>
-            </a>
+            </button>
           </div>
         </div>
 
-        <address class="font-label grid gap-3 text-sm not-italic lg:min-w-60">
-          <a
-            class="text-on-background-muted hover:text-primary focus-visible:text-primary flex items-center gap-3 transition-colors"
-            href="mailto:tdhuan013@gmail.com"
-          >
-            <svg
-              aria-hidden="true"
-              class="text-primary size-4 shrink-0"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <rect width="20" height="16" x="2" y="4" rx="2"></rect>
-              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-            </svg>
-            tdhuan013@gmail.com
-          </a>
-          <a
-            class="text-on-background-muted hover:text-primary focus-visible:text-primary flex items-center gap-3 transition-colors"
-            href="tel:+84962468571"
-          >
-            <svg
-              aria-hidden="true"
-              class="text-primary size-4 shrink-0"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path
-                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8 9.74a16 16 0 0 0 6 6l1.28-1.28a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92Z"
-              ></path>
-            </svg>
-            0962 468 571
-          </a>
-          <a
-            class="text-on-background-muted hover:text-primary focus-visible:text-primary flex items-center gap-3 transition-colors"
-            href="https://github.com/tdhuan"
-            rel="noreferrer"
-            target="_blank"
-          >
-            <svg
-              aria-hidden="true"
-              class="text-primary size-4 shrink-0"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            >
-              <path
-                d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.18-3.37-1.18-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.54 1.04 1.54 1.04.9 1.53 2.35 1.09 2.92.83.09-.65.35-1.09.64-1.34-2.22-.25-4.56-1.11-4.56-4.95 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02A9.55 9.55 0 0 1 12 6.8c.85 0 1.7.11 2.5.34 1.91-1.3 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.85-2.34 4.7-4.57 4.95.36.31.68.91.68 1.84v2.73c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"
-              ></path>
-            </svg>
-            github.com/tdhuan
-          </a>
+        <address
+          class="font-label grid break-inside-avoid gap-3 text-sm not-italic lg:min-w-60"
+        >
+          {
+            profile.contacts.map((contact) => (
+              <a
+                class="text-on-background-muted hover:text-primary focus-visible:text-primary flex items-center gap-3 transition-colors"
+                href={contact.href}
+                rel={contact.kind === "github" ? "noreferrer" : undefined}
+                target={contact.kind === "github" ? "_blank" : undefined}
+              >
+                <svg
+                  aria-hidden="true"
+                  class="text-primary size-4 shrink-0"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  set:html={contactIcons[contact.kind]}
+                />
+                {contact.label}
+              </a>
+            ))
+          }
         </address>
       </div>
     </header>
@@ -184,7 +119,7 @@ const education = [
         {
           experience.map(
             ({ title, company, period, summary, highlights, stack }, index) => (
-              <li class="flex gap-4 sm:gap-6">
+              <li class="flex break-inside-avoid gap-4 sm:gap-6">
                 <div
                   aria-hidden="true"
                   class="flex flex-col items-center gap-2.5"
@@ -272,3 +207,10 @@ const education = [
     </section>
   </article>
 </Layout>
+
+<script>
+  // Download = browser print dialog with the light print stylesheet (spec §5).
+  document.querySelector("[data-print-cv]")?.addEventListener("click", () => {
+    window.print();
+  });
+</script>
