@@ -80,6 +80,7 @@
  * can never drift apart.
  */
 :root {
+  /* Keep the 22 semantic tokens in lockstep: the --light-* raws here, the mappings in html[data-theme="light"] below, and the print html:root block in print.css. A token added to one must reach all three. */
   --light-background: #faf9f7;
   --light-on-background: #1e1b18;
   --light-on-background-variant: #5d362b;
@@ -105,6 +106,7 @@
 }
 
 html[data-theme="light"] {
+  /* Keep these 22 mappings in lockstep with the dark block and print.css's html:root block (see the :root --light-* comment above). */
   color-scheme: light;
   --color-background: var(--light-background);
   --color-on-background: var(--light-on-background);
@@ -131,6 +133,7 @@ html[data-theme="light"] {
 }
 
 html[data-theme="dark"] {
+  /* Keep these 22 values in lockstep with the light block and print.css's html:root block (see the :root --light-* comment above). */
   color-scheme: dark;
   --color-background: #171210;
   --color-on-background: #ece4dd;

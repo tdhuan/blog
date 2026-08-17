@@ -6,6 +6,11 @@
  */
 
 @media print {
+  /* `html:root` — not bare `:root`: this block must TIE `html[data-theme="dark"]`'s
+     (0,1,1) specificity so later source order (print.css imports after
+     global.css) lets the forced-light mappings win in every theme. Do not
+     "simplify" to :root — that silently reintroduces dark printing from dark
+     mode. */
   html:root {
     color-scheme: light;
     --color-background: var(--light-background);
@@ -32,6 +37,15 @@
     --color-outline-variant: var(--light-outline-variant);
   }
 
+  /* Print dialogs drop background graphics by default; the CV timeline's
+     dots and rail are backgrounds. print-color-adjust is inherited, so
+     scoping to the CV article (the only <article class="container-page">)
+     covers them without forcing backgrounds anywhere else. */
+  article.container-page {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
   @page {
     size: A4;
     margin: 14mm;
@@ -47,7 +61,7 @@
   }
 
   body {
-    background: #ffffff;
+    background: var(--light-surface);
   }
 
   /* Slightly compacted type for A4 (spec §4). */
