@@ -1,0 +1,61 @@
+/*
+ * Print output (spec §4): always the light theme, regardless of the
+ * visitor's active data-theme. Maps the semantic tokens to the same
+ * --light-* raw values used by html[data-theme="light"] in global.css,
+ * so screen-light and paper-light can never drift apart.
+ */
+
+@media print {
+  :root {
+    color-scheme: light;
+    --color-background: var(--light-background);
+    --color-on-background: var(--light-on-background);
+    --color-on-background-variant: var(--light-on-background-variant);
+    --color-on-background-muted: var(--light-on-background-muted);
+    --color-on-background-faint: var(--light-on-background-faint);
+    --color-surface: var(--light-surface);
+    --color-on-surface: var(--light-on-surface);
+    --color-primary: var(--light-primary);
+    --color-on-primary: var(--light-on-primary);
+    --color-secondary: var(--light-secondary);
+    --color-on-secondary: var(--light-on-secondary);
+    --color-inverse-surface: var(--light-inverse-surface);
+    --color-inverse-on-surface: var(--light-inverse-on-surface);
+    --color-drop: var(--light-drop);
+    --color-surface-subtle: var(--light-surface-subtle);
+    --color-surface-muted: var(--light-surface-muted);
+    --color-surface-elevated: var(--light-surface-elevated);
+    --color-surface-strong: var(--light-surface-strong);
+    --color-accent-soft: var(--light-accent-soft);
+    --color-accent-faint: var(--light-accent-faint);
+    --color-outline: var(--light-outline);
+    --color-outline-variant: var(--light-outline-variant);
+  }
+
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+
+  /* Site chrome never belongs on paper. */
+  .no-print {
+    display: none !important;
+  }
+
+  .background-drop {
+    display: none;
+  }
+
+  body {
+    background: #ffffff;
+  }
+
+  /* Slightly compacted type for A4 (spec §4). */
+  html {
+    font-size: 15px;
+  }
+
+  main {
+    padding-top: 0 !important;
+  }
+}
