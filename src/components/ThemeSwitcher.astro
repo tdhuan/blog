@@ -1,0 +1,89 @@
+---
+// Segmented theme control (spec §2). Native radios give arrow-key
+// navigation, tabbing and aria-checked semantics for free; the styled
+// labels are the visible segments and reflect checked state via
+// peer-checked utilities — no JS state mirroring for the visuals.
+const themes = [
+  { value: "sepia", label: "Sepia theme" },
+  { value: "light", label: "Light theme" },
+  { value: "dark", label: "Dark theme" },
+] as const;
+
+const icons: Record<(typeof themes)[number]["value"], string> = {
+  // Droplet — nods at the tinted paper theme (and the --color-drop token).
+  sepia:
+    '<path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7Z"></path>',
+  light:
+    '<circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path>',
+  dark: '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>',
+};
+---
+
+<fieldset
+  data-theme-switcher
+  class="border-outline-variant bg-surface m-0 flex items-center gap-0.5 rounded-full border p-0.5"
+>
+  <legend class="sr-only">Theme</legend>
+  {
+    themes.map(({ value, label }) => (
+      <label class="cursor-pointer">
+        <input
+          type="radio"
+          name="theme"
+          value={value}
+          class="peer sr-only"
+          checked={value === "sepia"}
+        />
+        <span
+          class="text-on-background-muted peer-checked:bg-surface-strong peer-checked:text-primary peer-focus-visible:ring-primary flex size-7 items-center justify-center rounded-full transition-colors peer-focus-visible:ring-2"
+          title={label}
+        >
+          <svg
+            aria-hidden="true"
+            class="size-3.5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            set:html={icons[value]}
+          />
+          <span class="sr-only">{label}</span>
+        </span>
+      </label>
+    ))
+  }
+</fieldset>
+
+<script>
+  // Sync the checked radio to whatever the inline head script restored,
+  // then apply + persist manual changes (spec §2).
+  const root = document.documentElement;
+  const group = document.querySelector<HTMLFieldSetElement>(
+    "[data-theme-switcher]",
+  );
+
+  if (group) {
+    const radios = group.querySelectorAll<HTMLInputElement>(
+      "input[name='theme']",
+    );
+    for (const radio of radios) {
+      radio.checked = radio.value === root.dataset.theme;
+    }
+
+    group.addEventListener("change", (event) => {
+      const value = (event.target as HTMLInputElement).value;
+      // Animate only while the swap happens, so per-element transition
+      // utilities are untouched the rest of the time (see global.css).
+      root.classList.add("theme-anim");
+      root.dataset.theme = value;
+      window.setTimeout(() => root.classList.remove("theme-anim"), 250);
+      try {
+        localStorage.setItem("theme", value);
+      } catch {
+        // Storage blocked (private mode): theme applies, just not saved.
+      }
+    });
+  }
+</script>
