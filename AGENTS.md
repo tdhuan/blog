@@ -48,14 +48,25 @@ Tailwind CSS v4 via the Vite plugin (no `tailwind.config` file). The design syst
 
 TypeScript uses the `astro/tsconfigs/strict` preset; ESLint parses `.astro` files with `astro-eslint-parser` + TypeScript parser.
 
-## Workflow
+## Development Workflow
+
+For every new feature or non-trivial implementation:
+
+1. Use the Superpowers `using-git-worktrees` skill before modifying code.
+2. Work inside the isolated worktree created by that skill.
+3. Never implement a new feature directly on the current working branch.
+4. Follow the Superpowers workflow for:
+   - brainstorming/planning
+   - implementation
+   - testing
+   - review
+5. Run the relevant tests, lint, and type checks before finishing
+   (`pnpm check`, lint/format, `pnpm build`).
+6. Do not merge or delete the worktree unless explicitly requested.
 
 Before modifying code: inspect the existing structure, read relevant components
 and patterns, reuse existing components and utilities, and follow the existing
 architecture.
-
-After implementation: run `pnpm check`, lint/format, and `pnpm build` when
-appropriate.
 
 ## Astro documentation
 
