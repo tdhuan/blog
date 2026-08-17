@@ -109,14 +109,9 @@ try {
 } catch (e) {
   document.documentElement.dataset.theme = "sepia";
 }
-requestAnimationFrame(function () {
-  document.documentElement.classList.add("theme-anim");
-});
 ```
 
-Runs before first paint — no flash of wrong theme. The `requestAnimationFrame`
-callback adds `theme-anim` only after the first frame, enabling theme-change
-transitions (see §2) without a cross-fade on load.
+Runs before first paint — no flash of wrong theme.
 
 ## 2. ThemeSwitcher component
 
@@ -144,10 +139,14 @@ transitions (see §2) without a cross-fade on load.
 
 ### Theme-change animation
 
-Color-only transitions (`background-color`, `color`, `border-color`, ~200ms),
-enabled only when `(prefers-reduced-motion: no-preference)` **and** after first
-paint — the inline head script adds a `theme-anim` class on `requestAnimationFrame`.
-No cross-fade on page load; reduced-motion users get an instant swap.
+Color-only transitions (`background-color`, `color`, `border-color`, `fill`,
+`stroke`, ~200ms) under a `theme-anim` class on `<html>`, gated by
+`(prefers-reduced-motion: no-preference)`. The switcher adds the class **only
+for ~250ms while a swap happens** and removes it after — a permanently-present
+`*`-scoped transition rule would override the site's per-element
+`transition-*` utilities (nav underline width, ArrowLink opacity). No
+cross-fade on page load (class never present then); reduced-motion users get
+an instant swap.
 
 ## 3. CV: single data source
 
