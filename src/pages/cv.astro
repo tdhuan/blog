@@ -59,7 +59,7 @@ const education = [
       >
         <div>
           <p
-            class="font-label text-brown-500 text-xs font-medium tracking-wide uppercase"
+            class="font-label text-on-background-faint text-xs font-medium tracking-wide uppercase"
           >
             Front end developer
           </p>
@@ -69,7 +69,7 @@ const education = [
             Huan Tran Dinh
           </h1>
           <p
-            class="text-brown-600 mt-7 max-w-2xl text-base leading-relaxed sm:text-lg"
+            class="text-on-background-muted mt-7 max-w-2xl text-base leading-relaxed sm:text-lg"
           >
             Software engineer interested in building considered digital
             experiences, useful tools, and the systems that make them last.
@@ -79,7 +79,7 @@ const education = [
             class="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center"
           >
             <p
-              class="font-label text-brown-600 flex items-center gap-2 text-xs font-medium tracking-wide uppercase"
+              class="font-label text-on-background-muted flex items-center gap-2 text-xs font-medium tracking-wide uppercase"
             >
               <span aria-hidden="true" class="bg-primary size-1.5 rounded-full"
               ></span>
@@ -109,7 +109,7 @@ const education = [
 
         <address class="font-label grid gap-3 text-sm not-italic lg:min-w-60">
           <a
-            class="text-brown-600 hover:text-primary focus-visible:text-primary flex items-center gap-3 transition-colors"
+            class="text-on-background-muted hover:text-primary focus-visible:text-primary flex items-center gap-3 transition-colors"
             href="mailto:tdhuan013@gmail.com"
           >
             <svg
@@ -128,7 +128,7 @@ const education = [
             tdhuan013@gmail.com
           </a>
           <a
-            class="text-brown-600 hover:text-primary focus-visible:text-primary flex items-center gap-3 transition-colors"
+            class="text-on-background-muted hover:text-primary focus-visible:text-primary flex items-center gap-3 transition-colors"
             href="tel:+84962468571"
           >
             <svg
@@ -148,7 +148,7 @@ const education = [
             0962 468 571
           </a>
           <a
-            class="text-brown-600 hover:text-primary focus-visible:text-primary flex items-center gap-3 transition-colors"
+            class="text-on-background-muted hover:text-primary focus-visible:text-primary flex items-center gap-3 transition-colors"
             href="https://github.com/tdhuan"
             rel="noreferrer"
             target="_blank"
@@ -192,7 +192,7 @@ const education = [
                   <span
                     class:list={[
                       "mt-2 size-2 shrink-0 rounded-full",
-                      index === 0 ? "bg-primary/85" : "bg-brown-200/85",
+                      index === 0 ? "bg-primary/85" : "bg-accent-soft/85",
                     ]}
                   />
                   <span class="bg-outline-variant/40 w-px flex-1" />
@@ -204,31 +204,31 @@ const education = [
                   ]}
                 >
                   <div class="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
-                    <h3 class="font-headline text-brown-800 sm:text-22 text-xl leading-tight lg:text-2xl">
+                    <h3 class="font-headline text-primary sm:text-22 text-xl leading-tight lg:text-2xl">
                       {title}
                     </h3>
-                    <p class="font-label text-brown-500 shrink-0 text-sm">
+                    <p class="font-label text-on-background-faint shrink-0 text-sm">
                       {period}
                     </p>
                   </div>
-                  <p class="font-label text-brown-500 mt-2 text-sm">
+                  <p class="font-label text-on-background-faint mt-2 text-sm">
                     {company}
                   </p>
-                  <p class="text-brown-700 mt-4 max-w-3xl leading-relaxed">
+                  <p class="text-on-background-variant mt-4 max-w-3xl leading-relaxed">
                     {summary}
                   </p>
                   {highlights.length > 0 && (
-                    <ul class="text-brown-700 marker:text-brown-500 mt-4 list-outside list-disc space-y-2 pl-5 text-sm leading-relaxed">
+                    <ul class="text-on-background-variant marker:text-on-background-faint mt-4 list-outside list-disc space-y-2 pl-5 text-sm leading-relaxed">
                       {highlights.map((highlight) => (
                         <li>{highlight}</li>
                       ))}
                     </ul>
                   )}
                   <dl class="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                    <dt class="font-label text-brown-500 text-xs font-medium tracking-wide uppercase">
+                    <dt class="font-label text-on-background-faint text-xs font-medium tracking-wide uppercase">
                       Tech stack
                     </dt>
-                    <dd class="text-brown-600 text-sm leading-relaxed">
+                    <dd class="text-on-background-muted text-sm leading-relaxed">
                       {stack.join(" · ")}
                     </dd>
                   </dl>
@@ -255,14 +255,16 @@ const education = [
           education.map(({ institution, degree, period }) => (
             <li>
               <div class="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
-                <h3 class="font-headline text-brown-800 sm:text-22 text-xl leading-tight lg:text-2xl">
+                <h3 class="font-headline text-primary sm:text-22 text-xl leading-tight lg:text-2xl">
                   {institution}
                 </h3>
-                <p class="font-label text-brown-500 shrink-0 text-sm">
+                <p class="font-label text-on-background-faint shrink-0 text-sm">
                   {period}
                 </p>
               </div>
-              <p class="font-label text-brown-500 mt-2 text-sm">{degree}</p>
+              <p class="font-label text-on-background-faint mt-2 text-sm">
+                {degree}
+              </p>
             </li>
           ))
         }
