@@ -173,7 +173,9 @@ sane, not just the CV).
     --color-background: var(--light-background); /* … */
   }
   @media print {
-    :root {
+    /* html:root — not bare :root — so the block ties html[data-theme="dark"]'s
+       specificity and wins on later source order in every theme */
+    html:root {
       --color-background: var(--light-background); /* … */
     }
   }

@@ -750,7 +750,10 @@ git commit -m "feat: extract cv data module and add download button"
  */
 
 @media print {
-  :root {
+  /* `html:root` (not bare `:root`): must tie `html[data-theme="dark"]`'s
+     (0,1,1) specificity so the later source order (print.css imports after
+     global.css) lets the forced-light mappings win in every theme. */
+  html:root {
     color-scheme: light;
     --color-background: var(--light-background);
     --color-on-background: var(--light-on-background);
