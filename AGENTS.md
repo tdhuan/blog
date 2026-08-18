@@ -46,6 +46,16 @@ Tailwind CSS v4 via the Vite plugin (no `tailwind.config` file). The design syst
 - Layout tokens (`--container-page`, `--spacing-margin-*`, `--spacing-gutter`) — e.g. `max-w-page`, `px-margin-mobile lg:px-margin-desktop`.
 - Font tokens (`--font-regular`, `--font-label`, `--font-headline`) — mapped to fonts loaded from Google Fonts in `Layout.astro`.
 
+UI conventions:
+
+- Corner language is square: bordered controls use `rounded-none`; `rounded-full` is reserved for deliberate circles (theme pill, CV timeline dots). No `rounded-lg`/`rounded-xl` card containers.
+- Floating layers (dropdowns, popovers) use the `bg-surface` + `border-outline-variant` recipe rather than shadows; attach full-width to the chrome they belong to.
+- Hairline separation via `border-t` / `divide-y divide-outline-variant` (see Footer, Header's mobile menu).
+- Nav links share the `after:` underline treatment (`after:w-0 hover:after:w-full`); the active page keeps `after:w-full` plus `aria-current="page"` (see Header).
+- Interactive state: a small inline `<script>` per component, hooked to `data-*` attributes, with `aria-expanded`/`aria-checked` as the source of truth. When animation matters, toggle utility classes (`invisible`, `grid-rows-[0fr]`) instead of `hidden` — `visibility` keeps closed UI out of the tab order while transitions still run. Pair every transition with `motion-reduce:transition-none`.
+- Breakpoints are mobile-first `sm:`/`lg:` pairs (`hidden sm:flex` with its matching `sm:hidden`). Custom type sizes only via px-named `--text-*` tokens (`text-56`), never `text-[56px]`; spacing stays on Tailwind's default scale.
+- Class order is machine-managed: `prettier-plugin-tailwindcss` sorts it on format — never hand-align.
+
 TypeScript uses the `astro/tsconfigs/strict` preset; ESLint parses `.astro` files with `astro-eslint-parser` + TypeScript parser.
 
 ## Development Workflow
