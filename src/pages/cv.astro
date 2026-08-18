@@ -1,6 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import { education, experience, profile } from "@/data/cv";
+import SectionHeading from "@/components/SectionHeading.astro";
+import { education, experience, profile, skills, strengths } from "@/data/cv";
 
 const contactIcons: Record<"email" | "phone" | "github", string> = {
   email:
@@ -14,7 +15,7 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
 
 <Layout title="CV | Huan Tran">
   <article class="container-page py-8">
-    <header class="border-outline-variant border-b pb-10 sm:pb-12">
+    <header class="pb-10 sm:pb-12">
       <div
         class="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between lg:gap-16 print:flex-row print:items-start print:justify-between print:gap-10"
       >
@@ -105,20 +106,47 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
     </header>
 
     <section
+      id="strengths"
+      class="pt-10 sm:pt-12"
+      aria-labelledby="strengths-title"
+    >
+      <SectionHeading id="strengths-title">Strengths</SectionHeading>
+      <ul
+        class="text-on-background-variant marker:text-on-background-faint mt-9 list-outside list-disc space-y-2 pl-5 text-sm leading-relaxed"
+        role="list"
+      >
+        {
+          strengths.map((strength) => (
+            <li class="break-inside-avoid">{strength}</li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section id="skills" class="pt-10 sm:pt-12" aria-labelledby="skills-title">
+      <SectionHeading id="skills-title">Skills</SectionHeading>
+      <dl class="mt-6 space-y-4">
+        {
+          skills.map(({ label, items }) => (
+            <div class="flex break-inside-avoid flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-6">
+              <dt class="font-label text-on-background-faint w-44 shrink-0 text-xs font-medium tracking-wide uppercase">
+                {label}
+              </dt>
+              <dd class="text-on-background-muted text-sm leading-relaxed">
+                {items.join(" · ")}
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+
+    <section
       id="experience"
       class="pt-10 sm:pt-12"
       aria-labelledby="experience-title"
     >
-      <h2
-        id="experience-title"
-        class="font-headline text-primary sm:text-26 text-2xl lg:text-3xl print:flex print:items-center print:gap-3"
-      >
-        Work Experience
-        <span
-          aria-hidden="true"
-          class="print:border-outline-variant/40 print:flex-1 print:border-t"
-        ></span>
-      </h2>
+      <SectionHeading id="experience-title">Work Experience</SectionHeading>
       <ul class="mt-6" role="list">
         {
           experience.map(
@@ -180,19 +208,11 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
     </section>
 
     <section
-      class="border-outline-variant mt-10 border-t pt-10 sm:mt-12 sm:pt-12"
+      id="education"
+      class="pt-10 sm:pt-12"
       aria-labelledby="education-title"
     >
-      <h2
-        id="education-title"
-        class="font-headline text-primary sm:text-26 text-2xl lg:text-3xl print:flex print:items-center print:gap-3"
-      >
-        Education
-        <span
-          aria-hidden="true"
-          class="print:border-outline-variant/40 print:flex-1 print:border-t"
-        ></span>
-      </h2>
+      <SectionHeading id="education-title">Education</SectionHeading>
       <ul class="mt-9 space-y-8" role="list">
         {
           education.map(({ institution, degree, period }) => (
