@@ -209,7 +209,9 @@ sane, not just the CV).
   the row to the right margin, on screen and in print. The rule is a
   `border-t` filler span, so it prints without `print-color-adjust` (print
   dialogs drop background graphics).
-- Trims decorative top padding on `main` in print.
+- Trims decorative top padding on `main` in print, and the header's bottom
+  padding (`print:pb-0`) so the first section starts one standard section-gap
+  below the profile instead of a doubled one.
 
 ## 5. Download button (`cv.astro`)
 
