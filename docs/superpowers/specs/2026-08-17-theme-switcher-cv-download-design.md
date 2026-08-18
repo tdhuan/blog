@@ -190,6 +190,8 @@ sane, not just the CV).
   `BackToTop`, `ThemeSwitcher`, and the download button.
 - `break-inside: avoid` on experience entries and the contact block so entries
   don't split across pages; slightly compacted type tuned at implementation.
+- CV timeline ornaments (dots + rail) carry `no-print`; hiding the ornament
+  column left-aligns each experience entry with the section heading.
 - Trims decorative top padding on `main` in print.
 
 ## 5. Download button (`cv.astro`)

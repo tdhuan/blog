@@ -37,15 +37,6 @@
     --color-outline-variant: var(--light-outline-variant);
   }
 
-  /* Print dialogs drop background graphics by default; the CV timeline's
-     dots and rail are backgrounds. print-color-adjust is inherited, so
-     scoping to the CV article (the only <article class="container-page">)
-     covers them without forcing backgrounds anywhere else. */
-  article.container-page {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-
   @page {
     size: A4;
     margin: 14mm;
