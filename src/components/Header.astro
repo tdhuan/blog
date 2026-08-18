@@ -8,27 +8,162 @@ const links = [
   { href: "/cv", label: "CV" },
 ] as const;
 
-const linkClass =
-  "font-label text-primary after:bg-primary relative inline-block after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:transition-all after:duration-300 after:ease-out hover:after:w-full focus-visible:after:w-full";
+// Current page keeps the underline treatment permanently (spec §2).
+const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
+const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
+
+// Shared underline geometry; width lives in the two variants below.
+const underlineClass =
+  "after:bg-primary relative inline-block after:absolute after:-bottom-1 after:left-0 after:h-px after:transition-all after:duration-300 after:ease-out";
+const linkClass = `font-label text-primary ${underlineClass} after:w-0 hover:after:w-full focus-visible:after:w-full`;
+const activeLinkClass = `font-label text-primary ${underlineClass} after:w-full`;
+
+// Mobile rows: the anchor is the tap target (py-3 + 24px line box ≈ 48px,
+// above the 44px minimum); the span carries the link typography so the
+// active underline hugs the text instead of the full row.
+const menuRowClass =
+  "hover:bg-surface-subtle focus-visible:bg-surface-subtle block px-margin-mobile py-3 transition-colors";
 ---
 
-<header class="no-print">
+<!-- Keep <header> positioned: the mobile panel anchors to it. -->
+<header data-site-header class="no-print relative">
   <div class="container-page flex h-16 items-center justify-between lg:h-20">
     <Logo />
-    <div class="lg:gap-gutter flex items-center gap-5">
+    <div class="lg:gap-gutter flex items-center gap-4">
       <nav
         aria-label="Primary"
-        class="text-primary lg:gap-gutter flex items-center gap-5 font-medium"
+        class="text-primary lg:gap-gutter hidden items-center font-medium sm:flex sm:gap-5"
       >
         {
           links.map(({ href, label }) => (
-            <a class={linkClass} href={href}>
+            <a
+              class={isActive(href) ? activeLinkClass : linkClass}
+              href={href}
+              aria-current={isActive(href) ? "page" : undefined}
+            >
               {label}
             </a>
           ))
         }
       </nav>
       <ThemeSwitcher />
+      <button
+        type="button"
+        data-menu-toggle
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Menu"
+        class="text-primary hover:bg-surface-strong focus-visible:ring-primary flex size-10 items-center justify-center rounded-none transition-colors focus-visible:ring-2 sm:hidden"
+      >
+        <svg
+          data-menu-icon="closed"
+          aria-hidden="true"
+          class="size-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="4" x2="20" y1="6" y2="6"></line>
+          <line x1="4" x2="20" y1="12" y2="12"></line>
+          <line x1="4" x2="20" y1="18" y2="18"></line>
+        </svg>
+        <svg
+          data-menu-icon="open"
+          aria-hidden="true"
+          class="hidden size-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M18 6 6 18"></path>
+          <path d="m6 6 12 12"></path>
+        </svg>
+      </button>
     </div>
   </div>
+  <nav
+    id="mobile-menu"
+    data-menu-panel
+    aria-label="Primary"
+    class="text-primary bg-background border-outline-variant invisible absolute inset-x-0 top-full z-40 grid grid-rows-[0fr] border-b font-medium transition-[grid-template-rows,visibility] duration-200 ease-out motion-reduce:transition-none sm:hidden"
+  >
+    <div class="overflow-hidden">
+      <div class="divide-outline-variant divide-y">
+        {
+          links.map(({ href, label }) => (
+            <a
+              class={menuRowClass}
+              href={href}
+              aria-current={isActive(href) ? "page" : undefined}
+            >
+              <span class={isActive(href) ? activeLinkClass : "font-label"}>
+                {label}
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </nav>
 </header>
+
+<script>
+  // Mobile menu (overlay panel, see data-menu-panel markup note).
+  // Toggling classes instead of the hidden attribute lets the CSS
+  // transition run; aria-expanded stays the source of truth for state.
+  const header = document.querySelector<HTMLElement>("[data-site-header]");
+  const toggle = header?.querySelector<HTMLButtonElement>("[data-menu-toggle]");
+  const panel = header?.querySelector<HTMLElement>("[data-menu-panel]");
+  const iconOpen = header?.querySelector<SVGElement>('[data-menu-icon="open"]');
+  const iconClosed = header?.querySelector<SVGElement>(
+    '[data-menu-icon="closed"]',
+  );
+
+  if (header && toggle && panel) {
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute("aria-expanded", String(open));
+      panel.classList.toggle("invisible", !open);
+      panel.classList.toggle("grid-rows-[0fr]", !open);
+      panel.classList.toggle("grid-rows-[1fr]", open);
+      iconClosed?.classList.toggle("hidden", open);
+      iconOpen?.classList.toggle("hidden", !open);
+    };
+
+    const isOpen = () => toggle.getAttribute("aria-expanded") === "true";
+    const close = () => setOpen(false);
+
+    toggle.addEventListener("click", () => setOpen(!isOpen()));
+
+    // Navigation is a full page load on this static site; close anyway so
+    // the panel never lingers during the transition.
+    panel.addEventListener("click", (event) => {
+      if ((event.target as Element).closest("a")) close();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && isOpen()) {
+        close();
+        toggle.focus();
+      }
+    });
+
+    // Tap/click outside the header closes the panel.
+    document.addEventListener("pointerdown", (event) => {
+      if (isOpen() && !header.contains(event.target as Node)) close();
+    });
+
+    // At sm+ the panel and toggle are display:none — sync state so it
+    // doesn't come back stale when the viewport shrinks again.
+    window
+      .matchMedia("(min-width: 640px)")
+      .addEventListener("change", (event) => {
+        if (event.matches) close();
+      });
+  }
+</script>

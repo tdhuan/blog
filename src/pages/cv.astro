@@ -81,7 +81,7 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
           {
             profile.contacts.map((contact) => (
               <a
-                class="text-on-background-muted hover:text-primary focus-visible:text-primary flex items-center gap-3 transition-colors"
+                class="text-on-background-muted hover:text-on-background focus-visible:text-primary flex items-center gap-3 transition-colors"
                 href={contact.href}
                 rel={contact.kind === "github" ? "noreferrer" : undefined}
                 target={contact.kind === "github" ? "_blank" : undefined}
