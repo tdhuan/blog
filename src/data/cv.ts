@@ -35,7 +35,7 @@ export const profile: CvProfile = {
   role: "Front end developer",
   summary:
     "Software engineer interested in building considered digital experiences, useful tools, and the systems that make them last.",
-  openToOpportunities: true,
+  openToOpportunities: false,
   contacts: [
     {
       kind: "email",
