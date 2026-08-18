@@ -15,7 +15,7 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
 
 <Layout title="CV | Huan Tran">
   <article class="container-page py-8">
-    <header class="border-outline-variant border-b pb-10 sm:pb-12">
+    <header class="pb-10 sm:pb-12">
       <div
         class="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between lg:gap-16"
       >
@@ -105,6 +105,24 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
       </div>
     </header>
 
+    <section
+      id="strengths"
+      class="pt-10 sm:pt-12"
+      aria-labelledby="strengths-title"
+    >
+      <SectionHeading id="strengths-title">Strengths</SectionHeading>
+      <ul
+        class="text-on-background-variant marker:text-on-background-faint mt-9 list-outside list-disc space-y-2 pl-5 text-sm leading-relaxed"
+        role="list"
+      >
+        {
+          strengths.map((strength) => (
+            <li class="break-inside-avoid">{strength}</li>
+          ))
+        }
+      </ul>
+    </section>
+
     <section id="skills" class="pt-10 sm:pt-12" aria-labelledby="skills-title">
       <SectionHeading id="skills-title">Skills</SectionHeading>
       <dl class="mt-6 space-y-4">
@@ -191,7 +209,7 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
 
     <section
       id="education"
-      class="border-outline-variant mt-10 border-t pt-10 sm:mt-12 sm:pt-12"
+      class="pt-10 sm:pt-12"
       aria-labelledby="education-title"
     >
       <SectionHeading id="education-title">Education</SectionHeading>
@@ -211,24 +229,6 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
                 {degree}
               </p>
             </li>
-          ))
-        }
-      </ul>
-    </section>
-
-    <section
-      id="strengths"
-      class="border-outline-variant mt-10 border-t pt-10 sm:mt-12 sm:pt-12"
-      aria-labelledby="strengths-title"
-    >
-      <SectionHeading id="strengths-title">Strengths</SectionHeading>
-      <ul
-        class="text-on-background-variant marker:text-on-background-faint mt-9 list-outside list-disc space-y-2 pl-5 text-sm leading-relaxed"
-        role="list"
-      >
-        {
-          strengths.map((strength) => (
-            <li class="break-inside-avoid">{strength}</li>
           ))
         }
       </ul>
