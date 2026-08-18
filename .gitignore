@@ -144,3 +144,6 @@ vite.config.ts.timestamp-*
 # generated types
 .astro
 .DS_Store
+
+# Superpowers SDD workspace (per-plan scratch)
+.superpowers/

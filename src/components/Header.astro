@@ -1,5 +1,6 @@
 ---
 import Logo from "./Logo.astro";
+import ThemeSwitcher from "./ThemeSwitcher.astro";
 
 const links = [
   { href: "/blog", label: "Blog" },
@@ -11,20 +12,23 @@ const linkClass =
   "font-label text-primary after:bg-primary relative inline-block after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:transition-all after:duration-300 after:ease-out hover:after:w-full focus-visible:after:w-full";
 ---
 
-<header>
+<header class="no-print">
   <div class="container-page flex h-16 items-center justify-between lg:h-20">
     <Logo />
-    <nav
-      aria-label="Primary"
-      class="text-primary lg:gap-gutter flex items-center gap-5 font-medium"
-    >
-      {
-        links.map(({ href, label }) => (
-          <a class={linkClass} href={href}>
-            {label}
-          </a>
-        ))
-      }
-    </nav>
+    <div class="lg:gap-gutter flex items-center gap-5">
+      <nav
+        aria-label="Primary"
+        class="text-primary lg:gap-gutter flex items-center gap-5 font-medium"
+      >
+        {
+          links.map(({ href, label }) => (
+            <a class={linkClass} href={href}>
+              {label}
+            </a>
+          ))
+        }
+      </nav>
+      <ThemeSwitcher />
+    </div>
   </div>
 </header>

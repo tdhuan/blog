@@ -1,5 +1,6 @@
 ---
 import "@/styles/global.css";
+import "@/styles/print.css";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import BackToTop from "@/components/BackToTop.astro";
@@ -20,8 +21,20 @@ const {
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth antialiased">
+<html lang="en" data-theme="sepia" class="scroll-smooth antialiased">
   <head>
+    <script is:inline>
+      // Restore the saved theme before first paint — no flash of the wrong
+      // theme (spec §1). Invalid or missing values fall back to sepia;
+      // blocked storage (private mode) falls back to sepia too.
+      try {
+        var t = localStorage.getItem("theme");
+        document.documentElement.dataset.theme =
+          ["sepia", "light", "dark"].indexOf(t) === -1 ? "sepia" : t;
+      } catch (e) {
+        document.documentElement.dataset.theme = "sepia";
+      }
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/png" href="/favicon.png" />

@@ -1,0 +1,21 @@
+---
+// Section heading with a rule line filling the remaining width. The line is
+// decorative (aria-hidden) and drawn as a border-t, not a background, so it
+// prints without print-color-adjust (print dialogs drop background graphics).
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+---
+
+<div class="flex items-center gap-3 sm:gap-4">
+  <h2
+    id={id}
+    class="font-headline text-primary sm:text-26 text-2xl lg:text-3xl print:font-semibold"
+  >
+    <slot />
+  </h2>
+  <span aria-hidden="true" class="border-outline-variant/40 flex-1 border-t"
+  ></span>
+</div>

@@ -1,0 +1,70 @@
+/*
+ * Print output (spec §4): light surfaces regardless of the visitor's active
+ * data-theme. Surfaces and outlines map to the same --light-* raw values
+ * used by html[data-theme="light"] in global.css. Text tokens deliberately
+ * DIVERGE from --light-*: paper uses neutral grays for contrast on white —
+ * do not "fix" them back to the brown --light-* values.
+ */
+
+@media print {
+  /* `html:root` — not bare `:root`: this block must TIE `html[data-theme="dark"]`'s
+     (0,1,1) specificity so later source order (print.css imports after
+     global.css) lets the forced-light mappings win in every theme. Do not
+     "simplify" to :root — that silently reintroduces dark printing from dark
+     mode. */
+  html:root {
+    color-scheme: light;
+    --color-background: var(--light-background);
+    /* Neutral grays for paper (spec §4): body #171717, accent and secondary
+       #262626, faint labels #404040. */
+    --color-on-background: #171717;
+    --color-on-background-variant: #171717;
+    --color-on-background-muted: #262626;
+    --color-on-background-faint: #404040;
+    --color-surface: var(--light-surface);
+    --color-on-surface: var(--light-on-surface);
+    --color-primary: #262626;
+    --color-on-primary: var(--light-on-primary);
+    --color-secondary: var(--light-secondary);
+    --color-on-secondary: var(--light-on-secondary);
+    --color-inverse-surface: var(--light-inverse-surface);
+    --color-inverse-on-surface: var(--light-inverse-on-surface);
+    --color-drop: var(--light-drop);
+    --color-surface-subtle: var(--light-surface-subtle);
+    --color-surface-muted: var(--light-surface-muted);
+    --color-surface-elevated: var(--light-surface-elevated);
+    --color-surface-strong: var(--light-surface-strong);
+    --color-accent-soft: var(--light-accent-soft);
+    --color-accent-faint: var(--light-accent-faint);
+    --color-outline: var(--light-outline);
+    --color-outline-variant: #a3a3a3;
+  }
+
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+
+  /* Site chrome never belongs on paper. */
+  .no-print {
+    display: none !important;
+  }
+
+  .background-drop {
+    display: none;
+  }
+
+  body {
+    background: var(--light-surface);
+  }
+
+  /* Compacted type for A4 (spec §4): 13px root scales the whole rem-based
+     type scale ~13% smaller (body ≈ 12px). */
+  html {
+    font-size: 13px;
+  }
+
+  main {
+    padding-top: 0 !important;
+  }
+}

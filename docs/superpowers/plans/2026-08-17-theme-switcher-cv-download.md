@@ -30,9 +30,11 @@
 ### Task 1: Theme tokens and per-theme override blocks in `global.css`
 
 **Files:**
+
 - Modify: `src/styles/global.css`
 
 **Interfaces:**
+
 - Consumes: existing `@theme` tokens and `--color-brown-*` palette.
 - Produces (used by Tasks 2–6): CSS custom properties `--color-on-background-variant`, `--color-on-background-muted`, `--color-on-background-faint`, `--color-accent-soft`, `--color-accent-faint` (hence Tailwind utilities `text-on-background-variant`, `text-on-background-muted`, `text-on-background-faint`, `bg-accent-soft/…`, `bg-accent-faint/…`); raw `--light-*` properties consumed by Task 6's print stylesheet; class `theme-anim` toggled by Task 4.
 
@@ -41,17 +43,17 @@
 In `src/styles/global.css`, inside the `@theme` block, directly after the `--color-on-background: #1e1b18;` line, insert:
 
 ```css
-  --color-on-background-variant: var(--color-brown-700);
-  --color-on-background-muted: var(--color-brown-600);
-  --color-on-background-faint: var(--color-brown-500);
+--color-on-background-variant: var(--color-brown-700);
+--color-on-background-muted: var(--color-brown-600);
+--color-on-background-faint: var(--color-brown-500);
 ```
 
 And directly after the `--color-drop: #eadac7;` line (still inside `@theme`), insert:
 
 ```css
-  /* Decorative accents (timeline dots, washes) */
-  --color-accent-soft: var(--color-brown-200);
-  --color-accent-faint: var(--color-brown-400);
+/* Decorative accents (timeline dots, washes) */
+--color-accent-soft: var(--color-brown-200);
+--color-accent-faint: var(--color-brown-400);
 ```
 
 Sepia's values are the `@theme` defaults, so the site renders identically before any switching exists.
@@ -207,57 +209,59 @@ git commit -m "feat: add semantic theme tokens and light/dark overrides"
 ### Task 2: Token sweep — replace every `brown-*` utility with semantic tokens
 
 **Files:**
+
 - Modify: `src/pages/cv.astro`
 - Modify: `src/components/Hero.astro`
 - Modify: `src/components/PostCard.astro`
 - Modify: `src/components/ArrowLink.astro`
 
 **Interfaces:**
+
 - Consumes: utilities from Task 1 (`text-on-background-variant`, `text-on-background-muted`, `text-on-background-faint`, `bg-accent-soft/…`, `bg-accent-faint/…`).
 - Produces: a `src/` tree where `brown-*` utilities exist only in `global.css` (verified by grep). Task 5's rewrite of `cv.astro` builds on these class names.
 
 - [ ] **Step 1: `Hero.astro` — 2 edits**
 
-| Line | Old | New |
-|---|---|---|
-| 11 | `font-label text-brown-500 text-xs font-medium tracking-wide uppercase sm:text-sm` | `font-label text-on-background-faint text-xs font-medium tracking-wide uppercase sm:text-sm` |
-| 20 | `font-regular text-brown-600 max-w-xl text-base lg:text-lg` | `font-regular text-on-background-muted max-w-xl text-base lg:text-lg` |
+| Line | Old                                                                                | New                                                                                          |
+| ---- | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| 11   | `font-label text-brown-500 text-xs font-medium tracking-wide uppercase sm:text-sm` | `font-label text-on-background-faint text-xs font-medium tracking-wide uppercase sm:text-sm` |
+| 20   | `font-regular text-brown-600 max-w-xl text-base lg:text-lg`                        | `font-regular text-on-background-muted max-w-xl text-base lg:text-lg`                        |
 
 - [ ] **Step 2: `PostCard.astro` — 2 edits**
 
-| Line | Old | New |
-|---|---|---|
-| 2 | `group gap-gutter hover:bg-brown-200/10 flex flex-col items-start px-3 py-10 md:flex-row md:py-12` | `group gap-gutter hover:bg-accent-soft/10 flex flex-col items-start px-3 py-10 md:flex-row md:py-12` |
-| 5 | `font-label text-brown-500 text-xs uppercase` | `font-label text-on-background-faint text-xs uppercase` |
+| Line | Old                                                                                                | New                                                                                                  |
+| ---- | -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| 2    | `group gap-gutter hover:bg-brown-200/10 flex flex-col items-start px-3 py-10 md:flex-row md:py-12` | `group gap-gutter hover:bg-accent-soft/10 flex flex-col items-start px-3 py-10 md:flex-row md:py-12` |
+| 5    | `font-label text-brown-500 text-xs uppercase`                                                      | `font-label text-on-background-faint text-xs uppercase`                                              |
 
 - [ ] **Step 3: `ArrowLink.astro` — 1 edit**
 
-| Line | Old | New |
-|---|---|---|
-| 12 | `text: "transition-colors hover:bg-brown-400/10 focus-visible:bg-brown-400/10",` | `text: "transition-colors hover:bg-accent-faint/10 focus-visible:bg-accent-faint/10",` |
+| Line | Old                                                                              | New                                                                                    |
+| ---- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| 12   | `text: "transition-colors hover:bg-brown-400/10 focus-visible:bg-brown-400/10",` | `text: "transition-colors hover:bg-accent-faint/10 focus-visible:bg-accent-faint/10",` |
 
 - [ ] **Step 4: `cv.astro` — 16 edits**
 
 Every `brown-*` class becomes a semantic one. Apply exactly:
 
-| Line | Old fragment | New fragment |
-|---|---|---|
-| 62 | `font-label text-brown-500 text-xs` | `font-label text-on-background-faint text-xs` |
-| 72 | `text-brown-600 mt-7 max-w-2xl` | `text-on-background-muted mt-7 max-w-2xl` |
-| 82 | `font-label text-brown-600 flex items-center` | `font-label text-on-background-muted flex items-center` |
-| 112 | `text-brown-600 hover:text-primary focus-visible:text-primary` (email link) | `text-on-background-muted hover:text-primary focus-visible:text-primary` |
-| 122 | `text-brown-600 hover:text-primary focus-visible:text-primary` (tel link) | `text-on-background-muted hover:text-primary focus-visible:text-primary` |
-| 137 | `text-brown-600 hover:text-primary focus-visible:text-primary` (github link) | `text-on-background-muted hover:text-primary focus-visible:text-primary` |
-| 195 | `index === 0 ? "bg-primary/85" : "bg-brown-200/85",` | `index === 0 ? "bg-primary/85" : "bg-accent-soft/85",` |
-| 207 | `font-headline text-brown-800 sm:text-22` (experience h3) | `font-headline text-primary sm:text-22` |
-| 210 | `font-label text-brown-500 shrink-0 text-sm` (experience period) | `font-label text-on-background-faint shrink-0 text-sm` |
-| 214 | `font-label text-brown-500 mt-2 text-sm` (company) | `font-label text-on-background-faint mt-2 text-sm` |
-| 217 | `text-brown-700 mt-4 max-w-3xl` (summary) | `text-on-background-variant mt-4 max-w-3xl` |
-| 221 | `text-brown-700 marker:text-brown-500 mt-4 list-outside` (highlights ul) | `text-on-background-variant marker:text-on-background-faint mt-4 list-outside` |
-| 228 | `font-label text-brown-500 text-xs font-medium` (stack dt) | `font-label text-on-background-faint text-xs font-medium` |
-| 231 | `text-brown-600 text-sm leading-relaxed` (stack dd) | `text-on-background-muted text-sm leading-relaxed` |
-| 258 | `font-headline text-brown-800 sm:text-22` (education h3) | `font-headline text-primary sm:text-22` |
-| 261 + 265 | `font-label text-brown-500 …` (education period + degree) | `font-label text-on-background-faint …` |
+| Line      | Old fragment                                                                 | New fragment                                                                   |
+| --------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| 62        | `font-label text-brown-500 text-xs`                                          | `font-label text-on-background-faint text-xs`                                  |
+| 72        | `text-brown-600 mt-7 max-w-2xl`                                              | `text-on-background-muted mt-7 max-w-2xl`                                      |
+| 82        | `font-label text-brown-600 flex items-center`                                | `font-label text-on-background-muted flex items-center`                        |
+| 112       | `text-brown-600 hover:text-primary focus-visible:text-primary` (email link)  | `text-on-background-muted hover:text-primary focus-visible:text-primary`       |
+| 122       | `text-brown-600 hover:text-primary focus-visible:text-primary` (tel link)    | `text-on-background-muted hover:text-primary focus-visible:text-primary`       |
+| 137       | `text-brown-600 hover:text-primary focus-visible:text-primary` (github link) | `text-on-background-muted hover:text-primary focus-visible:text-primary`       |
+| 195       | `index === 0 ? "bg-primary/85" : "bg-brown-200/85",`                         | `index === 0 ? "bg-primary/85" : "bg-accent-soft/85",`                         |
+| 207       | `font-headline text-brown-800 sm:text-22` (experience h3)                    | `font-headline text-primary sm:text-22`                                        |
+| 210       | `font-label text-brown-500 shrink-0 text-sm` (experience period)             | `font-label text-on-background-faint shrink-0 text-sm`                         |
+| 214       | `font-label text-brown-500 mt-2 text-sm` (company)                           | `font-label text-on-background-faint mt-2 text-sm`                             |
+| 217       | `text-brown-700 mt-4 max-w-3xl` (summary)                                    | `text-on-background-variant mt-4 max-w-3xl`                                    |
+| 221       | `text-brown-700 marker:text-brown-500 mt-4 list-outside` (highlights ul)     | `text-on-background-variant marker:text-on-background-faint mt-4 list-outside` |
+| 228       | `font-label text-brown-500 text-xs font-medium` (stack dt)                   | `font-label text-on-background-faint text-xs font-medium`                      |
+| 231       | `text-brown-600 text-sm leading-relaxed` (stack dd)                          | `text-on-background-muted text-sm leading-relaxed`                             |
+| 258       | `font-headline text-brown-800 sm:text-22` (education h3)                     | `font-headline text-primary sm:text-22`                                        |
+| 261 + 265 | `font-label text-brown-500 …` (education period + degree)                    | `font-label text-on-background-faint …`                                        |
 
 - [ ] **Step 5: Verify — grep gate + parity**
 
@@ -285,9 +289,11 @@ git commit -m "refactor: replace palette utilities with semantic theme tokens"
 ### Task 3: Flash-free persisted theme in `Layout.astro`
 
 **Files:**
+
 - Modify: `src/layouts/Layout.astro`
 
 **Interfaces:**
+
 - Consumes: the `html[data-theme]` blocks from Task 1; localStorage key `"theme"` with values `sepia | light | dark` (also written by Task 4's switcher).
 - Produces: `<html>` always carrying a valid `data-theme` before first paint. Task 4's script reads `document.documentElement.dataset.theme` for radio sync.
 
@@ -296,13 +302,13 @@ git commit -m "refactor: replace palette utilities with semantic theme tokens"
 In `src/layouts/Layout.astro` line 23, change:
 
 ```html
-<html lang="en" class="scroll-smooth antialiased">
+<html lang="en" class="scroll-smooth antialiased"></html>
 ```
 
 to:
 
 ```html
-<html lang="en" data-theme="sepia" class="scroll-smooth antialiased">
+<html lang="en" data-theme="sepia" class="scroll-smooth antialiased"></html>
 ```
 
 - [ ] **Step 2: Add the inline restore script as the first child of `<head>`**
@@ -310,18 +316,18 @@ to:
 Directly after `<head>` (line 24), before the `<meta charset>` line, insert:
 
 ```html
-    <script is:inline>
-      // Restore the saved theme before first paint — no flash of the wrong
-      // theme (spec §1). Invalid or missing values fall back to sepia;
-      // blocked storage (private mode) falls back to sepia too.
-      try {
-        var t = localStorage.getItem("theme");
-        document.documentElement.dataset.theme =
-          ["sepia", "light", "dark"].indexOf(t) === -1 ? "sepia" : t;
-      } catch (e) {
-        document.documentElement.dataset.theme = "sepia";
-      }
-    </script>
+<script is:inline>
+  // Restore the saved theme before first paint — no flash of the wrong
+  // theme (spec §1). Invalid or missing values fall back to sepia;
+  // blocked storage (private mode) falls back to sepia too.
+  try {
+    var t = localStorage.getItem("theme");
+    document.documentElement.dataset.theme =
+      ["sepia", "light", "dark"].indexOf(t) === -1 ? "sepia" : t;
+  } catch (e) {
+    document.documentElement.dataset.theme = "sepia";
+  }
+</script>
 ```
 
 `is:inline` is required so Astro emits the script verbatim in place instead of bundling it (a bundled module would run after paint).
@@ -351,10 +357,12 @@ git commit -m "feat: restore persisted theme before first paint"
 ### Task 4: `ThemeSwitcher` component and header integration
 
 **Files:**
+
 - Create: `src/components/ThemeSwitcher.astro`
 - Modify: `src/components/Header.astro`
 
 **Interfaces:**
+
 - Consumes: `dataset.theme` + localStorage key `"theme"` (Task 3), class `theme-anim` (Task 1).
 - Produces: `ThemeSwitcher.astro` default export (used by `Header.astro`); a `<fieldset data-theme-switcher>` that Task 6 hides in print.
 
@@ -374,7 +382,8 @@ const themes = [
 
 const icons: Record<(typeof themes)[number]["value"], string> = {
   // Droplet — nods at the tinted paper theme (and the --color-drop token).
-  sepia: '<path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7Z"></path>',
+  sepia:
+    '<path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7Z"></path>',
   light:
     '<circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path>',
   dark: '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>',
@@ -465,7 +474,7 @@ Replace the header body (lines 14–30) with — nav and switcher grouped so `ju
 <header>
   <div class="container-page flex h-16 items-center justify-between lg:h-20">
     <Logo />
-    <div class="flex items-center gap-5 lg:gap-gutter">
+    <div class="lg:gap-gutter flex items-center gap-5">
       <nav
         aria-label="Primary"
         class="text-primary lg:gap-gutter flex items-center gap-5 font-medium"
@@ -513,10 +522,12 @@ git commit -m "feat: add theme switcher to header"
 ### Task 5: CV data module + download button
 
 **Files:**
+
 - Create: `src/data/cv.ts`
 - Modify: `src/pages/cv.astro`
 
 **Interfaces:**
+
 - Consumes: semantic token classes (Task 2).
 - Produces: `src/data/cv.ts` exports `profile: CvProfile`, `experience: CvExperienceEntry[]`, `education: CvEducationEntry[]` (types below) — the single source of truth for current and future CV outputs. `cv.astro` also gains `break-inside-avoid` on entries/address and a `no-print` button hook that Task 6's stylesheet consumes.
 
@@ -562,9 +573,17 @@ export const profile: CvProfile = {
     "Software engineer interested in building considered digital experiences, useful tools, and the systems that make them last.",
   openToOpportunities: true,
   contacts: [
-    { kind: "email", href: "mailto:tdhuan013@gmail.com", label: "tdhuan013@gmail.com" },
+    {
+      kind: "email",
+      href: "mailto:tdhuan013@gmail.com",
+      label: "tdhuan013@gmail.com",
+    },
     { kind: "phone", href: "tel:+84962468571", label: "0962 468 571" },
-    { kind: "github", href: "https://github.com/tdhuan", label: "github.com/tdhuan" },
+    {
+      kind: "github",
+      href: "https://github.com/tdhuan",
+      label: "github.com/tdhuan",
+    },
   ],
 };
 
@@ -649,28 +668,28 @@ In the template: replace `{profile.role}`-equivalent literals — i.e. the eyebr
 Replace the whole anchor block (today lines 88–106, the `<a href="#experience">` with the down-arrow svg) with:
 
 ```astro
-            <button
-              type="button"
-              data-print-cv
-              title="Opens the print dialog — choose “Save as PDF”"
-              class="font-label border-primary/40 text-primary hover:border-primary focus-visible:border-primary no-print inline-flex items-center gap-2 border-b px-0 py-1 text-xs font-medium transition-colors"
-            >
-              Download CV
-              <svg
-                aria-hidden="true"
-                class="size-3.5"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M12 15V3"></path>
-                <path d="m7 10 5 5 5-5"></path>
-                <path d="M19 21H5"></path>
-              </svg>
-            </button>
+<button
+  type="button"
+  data-print-cv
+  title="Opens the print dialog — choose “Save as PDF”"
+  class="font-label border-primary/40 text-primary hover:border-primary focus-visible:border-primary no-print inline-flex items-center gap-2 border-b px-0 py-1 text-xs font-medium transition-colors"
+>
+  Download CV
+  <svg
+    aria-hidden="true"
+    class="size-3.5"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M12 15V3"></path>
+    <path d="m7 10 5 5 5-5"></path>
+    <path d="M19 21H5"></path>
+  </svg>
+</button>
 ```
 
 Same visual language as the old link (underline border, label font, arrow), so the header row's rhythm is unchanged.
@@ -710,11 +729,13 @@ git commit -m "feat: extract cv data module and add download button"
 ### Task 6: Print stylesheet — forced light output
 
 **Files:**
+
 - Create: `src/styles/print.css`
 - Modify: `src/layouts/Layout.astro` (import)
 - Modify: `src/components/Header.astro`, `src/components/Footer.astro`, `src/components/BackToTop.astro`, `src/components/ThemeSwitcher.astro` (`no-print`)
 
 **Interfaces:**
+
 - Consumes: `--light-*` raw properties (Task 1), `.no-print` convention + `[data-print-cv]` + `break-inside-avoid` (Task 5).
 - Produces: identical light A4 print/PDF output from any active theme.
 
@@ -729,7 +750,10 @@ git commit -m "feat: extract cv data module and add download button"
  */
 
 @media print {
-  :root {
+  /* `html:root` (not bare `:root`): must tie `html[data-theme="dark"]`'s
+     (0,1,1) specificity so the later source order (print.css imports after
+     global.css) lets the forced-light mappings win in every theme. */
+  html:root {
     color-scheme: light;
     --color-background: var(--light-background);
     --color-on-background: var(--light-on-background);
@@ -821,6 +845,7 @@ git commit -m "feat: force light print output and hide site chrome"
 ### Task 7: Full verification pass (spec §Verification)
 
 **Files:**
+
 - None (verification only; fix-forward on failures with a `fix:` commit).
 
 - [ ] **Step 1: Commands**

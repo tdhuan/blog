@@ -17,6 +17,9 @@
   /* Semantic */
   --color-background: #eae9e3;
   --color-on-background: #1e1b18;
+  --color-on-background-variant: var(--color-brown-700);
+  --color-on-background-muted: var(--color-brown-600);
+  --color-on-background-faint: var(--color-brown-500);
 
   --color-surface: #fff8f5;
   --color-on-surface: #1e1b18;
@@ -32,6 +35,10 @@
 
   /* Decorative drop/blob */
   --color-drop: #eadac7;
+
+  /* Decorative accents (timeline dots, washes) */
+  --color-accent-soft: var(--color-brown-200);
+  --color-accent-faint: var(--color-brown-400);
 
   /* Surface hierarchy */
   --color-surface-subtle: #fbf2ed;
@@ -59,10 +66,107 @@
   --font-headline: "Libre Caslon Text", serif;
 
   /* Type scale — custom sizes beyond Tailwind's default scale */
-  --text-22: 1.375rem; /* 22px */
-  --text-26: 1.625rem; /* 26px */
-  --text-56: 3.5rem; /* 56px */
-  --text-64: 4rem; /* 64px */
+  --text-22: 1.375rem;
+  /* 22px */
+  --text-26: 1.625rem;
+  /* 26px */
+  --text-56: 3.5rem;
+  /* 56px */
+  --text-64: 4rem;
+  /* 64px */
+}
+
+/*
+ * Themes (spec §1). Sepia needs no block — its values ARE the :root
+ * defaults in @theme above. The raw --light-* values are declared once
+ * here and consumed by BOTH html[data-theme="light"] and the print
+ * stylesheet (src/styles/print.css), so screen-light and paper-light
+ * can never drift apart.
+ */
+:root {
+  /* Keep the 22 semantic tokens in lockstep: the --light-* raws here, the mappings in html[data-theme="light"] below, and the print html:root block in print.css. A token added to one must reach all three. */
+  --light-background: #faf9f7;
+  --light-on-background: #1e1b18;
+  --light-on-background-variant: #5d362b;
+  --light-on-background-muted: #70483a;
+  --light-on-background-faint: #85604f;
+  --light-surface: #ffffff;
+  --light-on-surface: #1e1b18;
+  --light-primary: #4c2525;
+  --light-on-primary: #ffffff;
+  --light-secondary: #635d58;
+  --light-on-secondary: #ffffff;
+  --light-inverse-surface: #34302c;
+  --light-inverse-on-surface: #f8efea;
+  --light-drop: #f0e9e2;
+  --light-surface-subtle: #f5f4f2;
+  --light-surface-muted: #f0efec;
+  --light-surface-elevated: #eae9e6;
+  --light-surface-strong: #e4e3e0;
+  --light-accent-soft: #d5c1b2;
+  --light-accent-faint: #9e7a66;
+  --light-outline: #8a7171;
+  --light-outline-variant: #e0d5d0;
+}
+
+html[data-theme="light"] {
+  /* Keep these 22 mappings in lockstep with the dark block and print.css's html:root block (see the :root --light-* comment above). */
+  color-scheme: light;
+  --color-background: var(--light-background);
+  --color-on-background: var(--light-on-background);
+  --color-on-background-variant: var(--light-on-background-variant);
+  --color-on-background-muted: var(--light-on-background-muted);
+  --color-on-background-faint: var(--light-on-background-faint);
+  --color-surface: var(--light-surface);
+  --color-on-surface: var(--light-on-surface);
+  --color-primary: var(--light-primary);
+  --color-on-primary: var(--light-on-primary);
+  --color-secondary: var(--light-secondary);
+  --color-on-secondary: var(--light-on-secondary);
+  --color-inverse-surface: var(--light-inverse-surface);
+  --color-inverse-on-surface: var(--light-inverse-on-surface);
+  --color-drop: var(--light-drop);
+  --color-surface-subtle: var(--light-surface-subtle);
+  --color-surface-muted: var(--light-surface-muted);
+  --color-surface-elevated: var(--light-surface-elevated);
+  --color-surface-strong: var(--light-surface-strong);
+  --color-accent-soft: var(--light-accent-soft);
+  --color-accent-faint: var(--light-accent-faint);
+  --color-outline: var(--light-outline);
+  --color-outline-variant: var(--light-outline-variant);
+}
+
+html[data-theme="dark"] {
+  /* Keep these 22 values in lockstep with the light block and print.css's html:root block (see the :root --light-* comment above). */
+  color-scheme: dark;
+  --color-background: #171210;
+  --color-on-background: #ece4dd;
+  --color-on-background-variant: #c9b8ac;
+  --color-on-background-muted: #b09a8c;
+  --color-on-background-faint: #9e7a66;
+  --color-surface: #201a16;
+  --color-on-surface: #ece4dd;
+  --color-primary: #c9ad97;
+  --color-on-primary: #241a15;
+  --color-secondary: #b09a8c;
+  --color-on-secondary: #241a15;
+  --color-inverse-surface: #ece4dd;
+  --color-inverse-on-surface: #34302c;
+  --color-drop: #241b16;
+  --color-surface-subtle: #241d18;
+  --color-surface-muted: #2a221d;
+  --color-surface-elevated: #2f2620;
+  --color-surface-strong: #362c25;
+  --color-accent-soft: #6f5f56;
+  --color-accent-faint: #4a3e38;
+  --color-outline: #6f5f56;
+  --color-outline-variant: #4a3e38;
+}
+
+/* Same noise SVG as .background-drop but at opacity 0.05 — 10% reads
+   too strong on the espresso background (spec §1 acceptance criterion). */
+html[data-theme="dark"] .background-drop {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
 }
 
 @utility container-page {
@@ -70,6 +174,7 @@
 }
 
 @layer base {
+
   html,
   body {
     margin: 0;
@@ -89,11 +194,11 @@
     overscroll-behavior: none;
   }
 
-  main > :first-child {
+  main> :first-child {
     margin-top: 0 !important;
   }
 
-  main > :last-child {
+  main> :last-child {
     margin-bottom: 0 !important;
   }
 }
@@ -105,5 +210,23 @@ html {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+}
+
+/* Theme-swap animation (spec §2). The class is added by the switcher for
+   ~250ms only while a swap happens, so per-element transition utilities
+   (nav underline, ArrowLink) are untouched the rest of the time. */
+@media (prefers-reduced-motion: no-preference) {
+
+  html.theme-anim,
+  html.theme-anim *,
+  html.theme-anim *::before,
+  html.theme-anim *::after {
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease,
+      fill 0.2s ease,
+      stroke 0.2s ease !important;
   }
 }
