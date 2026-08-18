@@ -99,3 +99,47 @@ export const education: CvEducationEntry[] = [
     period: "2015 — 2019",
   },
 ];
+
+export interface CvSkillGroup {
+  label: string;
+  items: string[];
+}
+
+export const skills: CvSkillGroup[] = [
+  {
+    label: "Programming languages",
+    items: ["TypeScript", "JavaScript", "HTML", "CSS"],
+  },
+  {
+    label: "Frameworks & libraries",
+    items: [
+      "React",
+      "Next.js",
+      "GraphQL",
+      "Tailwind CSS",
+      "Headless UI",
+      "TanStack Query",
+      "React Hook Form",
+      "Storybook",
+    ],
+  },
+  { label: "Version control", items: ["Git", "GitHub"] },
+  { label: "IDE", items: ["Neovim", "VS Code"] },
+  {
+    label: "Knowledge",
+    items: [
+      "Responsive design",
+      "Accessibility",
+      "Design systems",
+      "Component-driven architecture",
+      "Performance",
+    ],
+  },
+];
+
+export const strengths: string[] = [
+  "Collaborates closely with designers to deliver features end to end — from planning through implementation, testing, and release.",
+  "Builds reusable, responsive interface patterns and documents them so the whole team can move faster.",
+  "Pragmatic about shipping: helps evolve products from early stages into production systems built to last.",
+  "Approachable teammate — glad to help with implementation questions and day-to-day problem solving.",
+];
