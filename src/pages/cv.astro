@@ -16,7 +16,7 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
   <article class="container-page py-8">
     <header class="border-outline-variant border-b pb-10 sm:pb-12">
       <div
-        class="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between lg:gap-16"
+        class="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between lg:gap-16 print:flex-row print:items-start print:justify-between print:gap-10"
       >
         <div>
           <p
@@ -75,7 +75,7 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
         </div>
 
         <address
-          class="font-label grid break-inside-avoid gap-3 text-sm not-italic lg:min-w-60"
+          class="font-label print:border-outline-variant/40 grid break-inside-avoid gap-3 text-sm not-italic lg:min-w-60 print:min-w-60 print:border-l print:pl-6"
         >
           {
             profile.contacts.map((contact) => (

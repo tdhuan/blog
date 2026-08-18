@@ -192,6 +192,9 @@ sane, not just the CV).
   don't split across pages; slightly compacted type tuned at implementation.
 - CV timeline ornaments (dots + rail) carry `no-print`; hiding the ornament
   column left-aligns each experience entry with the section heading.
+- The header contact block mirrors the `lg` row in print (`print:flex-row …`
+  on the header wrapper, `print:min-w-60` on `<address>`), with a thin
+  `border-l` rule separating it from the name block.
 - Trims decorative top padding on `main` in print.
 
 ## 5. Download button (`cv.astro`)
