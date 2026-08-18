@@ -192,9 +192,13 @@ sane, not just the CV).
   background (no noise texture — ink).
 - Chrome hidden via a shared `no-print` class: `Header`, `Footer`,
   `BackToTop`, `ThemeSwitcher`, and the download button.
-- `break-inside: avoid` on experience entries and the contact block so entries
-  don't split across pages. Type compacted via a 13px print root (~13%
-  smaller, body ≈ 12px); the name and all headings print `font-semibold`.
+- `break-inside: avoid` on small units only (contact block, strength bullets,
+  skill rows) so they never split; experience entries flow line-by-line across
+  page breaks instead of jumping whole-block to the next page. Type compacted
+  via a 13px print root (~13% smaller, body ≈ 12px); the name and all headings
+  print `font-semibold`; all non-heading text prints at a uniform `text-sm`
+  (≈ 11.4px on paper) via `print:text-sm` (`sm:print:text-sm` where responsive
+  sizes would outrank it).
 - CV timeline ornaments (dots + rail) carry `no-print`; hiding the ornament
   column left-aligns each experience entry with the section heading.
 - The header contact block mirrors the `lg` row in print (`print:flex-row …`
@@ -238,8 +242,9 @@ No test suite exists, so per `CLAUDE.md`: `pnpm check`, `pnpm exec eslint .`,
 - Persistence across reload and new tab
 - FOUC check: throttled reload shows no wrong-theme flash
 - Switcher: keyboard (tab + arrows), radiogroup semantics, 375px fit beside nav
-- Print preview from each theme → identical light A4 output; no experience
-  entry split across pages; chrome and download button hidden
+- Print preview from each theme → identical light A4 output; experience
+  entries flow line-by-line across page breaks; chrome and download button
+  hidden
 - Reduced motion: theme swap is instant, no transition
 
 ## Files touched

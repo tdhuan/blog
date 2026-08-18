@@ -21,7 +21,7 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
       >
         <div>
           <p
-            class="font-label text-on-background-faint text-xs font-medium tracking-wide uppercase"
+            class="font-label text-on-background-faint text-xs font-medium tracking-wide uppercase print:text-sm"
           >
             {profile.role}
           </p>
@@ -31,7 +31,7 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
             {profile.name}
           </h1>
           <p
-            class="text-on-background-muted mt-7 max-w-2xl text-base leading-relaxed sm:text-lg"
+            class="text-on-background-muted mt-7 max-w-2xl text-base leading-relaxed sm:text-lg print:text-sm sm:print:text-sm"
           >
             {profile.summary}
           </p>
@@ -129,7 +129,7 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
         {
           skills.map(({ label, items }) => (
             <div class="flex break-inside-avoid flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-6">
-              <dt class="font-label text-on-background-faint w-44 shrink-0 text-xs font-medium tracking-wide uppercase">
+              <dt class="font-label text-on-background-faint w-44 shrink-0 text-xs font-medium tracking-wide uppercase print:text-sm">
                 {label}
               </dt>
               <dd class="text-on-background-muted text-sm leading-relaxed">
@@ -151,7 +151,7 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
         {
           experience.map(
             ({ title, company, period, summary, highlights, stack }, index) => (
-              <li class="flex break-inside-avoid gap-4 sm:gap-6">
+              <li class="flex gap-4 sm:gap-6">
                 <div
                   aria-hidden="true"
                   class="no-print flex flex-col items-center gap-2.5"
@@ -181,7 +181,7 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
                   <p class="font-label text-on-background-faint mt-2 text-sm">
                     {company}
                   </p>
-                  <p class="text-on-background-variant mt-4 max-w-3xl leading-relaxed">
+                  <p class="text-on-background-variant mt-4 max-w-3xl leading-relaxed print:text-sm">
                     {summary}
                   </p>
                   {highlights.length > 0 && (
@@ -192,7 +192,7 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
                     </ul>
                   )}
                   <dl class="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                    <dt class="font-label text-on-background-faint text-xs font-medium tracking-wide uppercase">
+                    <dt class="font-label text-on-background-faint text-xs font-medium tracking-wide uppercase print:text-sm">
                       Tech stack
                     </dt>
                     <dd class="text-on-background-muted text-sm leading-relaxed">
