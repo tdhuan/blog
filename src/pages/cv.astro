@@ -1,5 +1,6 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
 import { education, experience, profile, skills, strengths } from "@/data/cv";
 
 const contactIcons: Record<"email" | "phone" | "github", string> = {
@@ -105,12 +106,7 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
     </header>
 
     <section id="skills" class="pt-10 sm:pt-12" aria-labelledby="skills-title">
-      <h2
-        id="skills-title"
-        class="font-headline text-primary sm:text-26 text-2xl lg:text-3xl"
-      >
-        Skills
-      </h2>
+      <SectionHeading id="skills-title">Skills</SectionHeading>
       <dl class="mt-6 space-y-4">
         {
           skills.map(({ label, items }) => (
@@ -132,12 +128,7 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
       class="pt-10 sm:pt-12"
       aria-labelledby="experience-title"
     >
-      <h2
-        id="experience-title"
-        class="font-headline text-primary sm:text-26 text-2xl lg:text-3xl"
-      >
-        Work Experience
-      </h2>
+      <SectionHeading id="experience-title">Work Experience</SectionHeading>
       <ul class="mt-6" role="list">
         {
           experience.map(
@@ -203,12 +194,7 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
       class="border-outline-variant mt-10 border-t pt-10 sm:mt-12 sm:pt-12"
       aria-labelledby="education-title"
     >
-      <h2
-        id="education-title"
-        class="font-headline text-primary sm:text-26 text-2xl lg:text-3xl"
-      >
-        Education
-      </h2>
+      <SectionHeading id="education-title">Education</SectionHeading>
       <ul class="mt-9 space-y-8" role="list">
         {
           education.map(({ institution, degree, period }) => (
@@ -235,12 +221,7 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
       class="border-outline-variant mt-10 border-t pt-10 sm:mt-12 sm:pt-12"
       aria-labelledby="strengths-title"
     >
-      <h2
-        id="strengths-title"
-        class="font-headline text-primary sm:text-26 text-2xl lg:text-3xl"
-      >
-        Strengths
-      </h2>
+      <SectionHeading id="strengths-title">Strengths</SectionHeading>
       <ul
         class="text-on-background-variant marker:text-on-background-faint mt-9 list-outside list-disc space-y-2 pl-5 text-sm leading-relaxed"
         role="list"
