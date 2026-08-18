@@ -1,0 +1,20 @@
+---
+// Section heading with a rule line filling the remaining width. The line is
+// decorative (aria-hidden) and prints via the CV article's
+// print-color-adjust: exact.
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+---
+
+<div class="flex items-center gap-3 sm:gap-4">
+  <h2
+    id={id}
+    class="font-headline text-primary sm:text-26 text-2xl lg:text-3xl"
+  >
+    <slot />
+  </h2>
+  <span aria-hidden="true" class="bg-outline-variant/40 h-px flex-1"></span>
+</div>
