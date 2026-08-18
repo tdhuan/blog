@@ -1,6 +1,7 @@
 ---
 import Logo from "./Logo.astro";
 import ThemeSwitcher from "./ThemeSwitcher.astro";
+import MobileMenu from "./MobileMenu.astro";
 
 const links = [
   { href: "/blog", label: "Blog" },
@@ -10,14 +11,10 @@ const links = [
 
 const linkClass =
   "font-label text-primary after:bg-primary relative inline-block after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:transition-all after:duration-300 after:ease-out hover:after:w-full focus-visible:after:w-full";
-
-// Panel rows replace the hover underline with a full tap-target row —
-// same link tokens, sized for thumbs instead of cursors.
-const menuLinkClass =
-  "font-label text-primary hover:bg-surface-strong focus-visible:bg-surface-strong block rounded-lg px-4 py-3 transition-colors";
 ---
 
-<header data-site-header class="no-print relative">
+<!-- Keep <header> positioned: MobileMenu's dropdown panel anchors to it. -->
+<header class="no-print relative">
   <div class="container-page flex h-16 items-center justify-between lg:h-20">
     <Logo />
     <div class="lg:gap-gutter flex items-center gap-4">
@@ -34,125 +31,7 @@ const menuLinkClass =
         }
       </nav>
       <ThemeSwitcher />
-      <button
-        type="button"
-        data-menu-toggle
-        aria-expanded="false"
-        aria-controls="mobile-menu"
-        aria-label="Menu"
-        class="text-primary hover:bg-surface-strong focus-visible:ring-primary flex size-10 items-center justify-center rounded-full transition-colors focus-visible:ring-2 sm:hidden"
-      >
-        <svg
-          data-menu-icon="closed"
-          aria-hidden="true"
-          class="size-5"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <line x1="4" x2="20" y1="6" y2="6"></line>
-          <line x1="4" x2="20" y1="12" y2="12"></line>
-          <line x1="4" x2="20" y1="18" y2="18"></line>
-        </svg>
-        <svg
-          data-menu-icon="open"
-          aria-hidden="true"
-          class="hidden size-5"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M18 6 6 18"></path>
-          <path d="m6 6 12 12"></path>
-        </svg>
-      </button>
-    </div>
-  </div>
-
-  <!-- Closed state lives in markup (invisible keeps the panel out of the
-       a11y tree and tab order); the script swaps these classes so the
-       fade/slide transition can run both ways. -->
-  <div
-    id="mobile-menu"
-    data-menu-panel
-    class="invisible absolute inset-x-0 top-full z-40 -translate-y-2 opacity-0 transition-[opacity,transform,visibility] duration-150 ease-out motion-reduce:transition-none sm:hidden"
-  >
-    <div class="container-page pt-2">
-      <nav
-        aria-label="Primary"
-        class="bg-surface border-outline-variant rounded-xl border p-2"
-      >
-        {
-          links.map(({ href, label }) => (
-            <a class={menuLinkClass} href={href}>
-              {label}
-            </a>
-          ))
-        }
-      </nav>
+      <MobileMenu links={links} />
     </div>
   </div>
 </header>
-
-<script>
-  // Mobile menu dropdown (see data-menu-panel markup note). Toggling
-  // classes instead of the hidden attribute lets the CSS transition run;
-  // aria-expanded on the button stays the source of truth for state.
-  const header = document.querySelector<HTMLElement>("[data-site-header]");
-  const toggle = header?.querySelector<HTMLButtonElement>("[data-menu-toggle]");
-  const panel = header?.querySelector<HTMLElement>("[data-menu-panel]");
-  const iconOpen = header?.querySelector<SVGElement>('[data-menu-icon="open"]');
-  const iconClosed = header?.querySelector<SVGElement>(
-    '[data-menu-icon="closed"]',
-  );
-
-  if (header && toggle && panel) {
-    const closedClasses = ["invisible", "opacity-0", "-translate-y-2"];
-
-    const setOpen = (open: boolean) => {
-      toggle.setAttribute("aria-expanded", String(open));
-      for (const className of closedClasses) {
-        panel.classList.toggle(className, !open);
-      }
-      iconClosed?.classList.toggle("hidden", open);
-      iconOpen?.classList.toggle("hidden", !open);
-    };
-
-    const isOpen = () => toggle.getAttribute("aria-expanded") === "true";
-    const close = () => setOpen(false);
-
-    toggle.addEventListener("click", () => setOpen(!isOpen()));
-
-    // Navigation is a full page load on this static site; close anyway so
-    // the panel never lingers during the transition.
-    panel.addEventListener("click", (event) => {
-      if ((event.target as Element).closest("a")) close();
-    });
-
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && isOpen()) {
-        close();
-        toggle.focus();
-      }
-    });
-
-    // Tap/click outside the header closes the panel.
-    document.addEventListener("pointerdown", (event) => {
-      if (isOpen() && !header.contains(event.target as Node)) close();
-    });
-
-    // At sm+ the panel and toggle are display:none — sync state so it
-    // doesn't come back stale when the viewport shrinks again.
-    window
-      .matchMedia("(min-width: 640px)")
-      .addEventListener("change", (event) => {
-        if (event.matches) close();
-      });
-  }
-</script>
