@@ -182,14 +182,19 @@ sane, not just the CV).
   ```
 
   Printing from sepia or dark yields the identical light result; no duplicated
-  hexes to drift.
+  hexes to drift. Text tokens intentionally diverge from `--light-*` on paper:
+  neutral grays for contrast on white — primary/accent `#262626`
+  (neutral-800), body `#171717` (neutral-900), muted `#262626`, faint
+  `#404040` (neutral-700) — and `--color-outline-variant` maps to `#a3a3a3`
+  so the rules match the neutral text.
 
 - `@page { size: A4; margin: 14mm }`, `color-scheme: light`, flat white body
   background (no noise texture — ink).
 - Chrome hidden via a shared `no-print` class: `Header`, `Footer`,
   `BackToTop`, `ThemeSwitcher`, and the download button.
 - `break-inside: avoid` on experience entries and the contact block so entries
-  don't split across pages; slightly compacted type tuned at implementation.
+  don't split across pages. Type compacted via a 13px print root (~13%
+  smaller, body ≈ 12px); the name and all headings print `font-semibold`.
 - CV timeline ornaments (dots + rail) carry `no-print`; hiding the ornament
   column left-aligns each experience entry with the section heading.
 - The header contact block mirrors the `lg` row in print (`print:flex-row …`

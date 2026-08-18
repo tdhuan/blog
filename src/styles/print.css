@@ -1,8 +1,9 @@
 /*
- * Print output (spec §4): always the light theme, regardless of the
- * visitor's active data-theme. Maps the semantic tokens to the same
- * --light-* raw values used by html[data-theme="light"] in global.css,
- * so screen-light and paper-light can never drift apart.
+ * Print output (spec §4): light surfaces regardless of the visitor's active
+ * data-theme. Surfaces and outlines map to the same --light-* raw values
+ * used by html[data-theme="light"] in global.css. Text tokens deliberately
+ * DIVERGE from --light-*: paper uses neutral grays for contrast on white —
+ * do not "fix" them back to the brown --light-* values.
  */
 
 @media print {
@@ -14,13 +15,15 @@
   html:root {
     color-scheme: light;
     --color-background: var(--light-background);
-    --color-on-background: var(--light-on-background);
-    --color-on-background-variant: var(--light-on-background-variant);
-    --color-on-background-muted: var(--light-on-background-muted);
-    --color-on-background-faint: var(--light-on-background-faint);
+    /* Neutral grays for paper (spec §4): body #171717, accent and secondary
+       #262626, faint labels #404040. */
+    --color-on-background: #171717;
+    --color-on-background-variant: #171717;
+    --color-on-background-muted: #262626;
+    --color-on-background-faint: #404040;
     --color-surface: var(--light-surface);
     --color-on-surface: var(--light-on-surface);
-    --color-primary: var(--light-primary);
+    --color-primary: #262626;
     --color-on-primary: var(--light-on-primary);
     --color-secondary: var(--light-secondary);
     --color-on-secondary: var(--light-on-secondary);
@@ -34,7 +37,7 @@
     --color-accent-soft: var(--light-accent-soft);
     --color-accent-faint: var(--light-accent-faint);
     --color-outline: var(--light-outline);
-    --color-outline-variant: var(--light-outline-variant);
+    --color-outline-variant: #a3a3a3;
   }
 
   @page {
@@ -55,9 +58,10 @@
     background: var(--light-surface);
   }
 
-  /* Slightly compacted type for A4 (spec §4). */
+  /* Compacted type for A4 (spec §4): 13px root scales the whole rem-based
+     type scale ~13% smaller (body ≈ 12px). */
   html {
-    font-size: 15px;
+    font-size: 13px;
   }
 
   main {
