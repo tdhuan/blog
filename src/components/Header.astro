@@ -22,10 +22,11 @@ const activeLinkClass = `font-label text-primary ${underlineClass} after:w-full`
 // above the 44px minimum); the span carries the link typography so the
 // active underline hugs the text instead of the full row.
 const menuRowClass =
-  "hover:bg-surface-subtle focus-visible:bg-surface-subtle block py-3 transition-colors";
+  "hover:bg-surface-subtle focus-visible:bg-surface-subtle block px-margin-mobile py-3 transition-colors";
 ---
 
-<header data-site-header class="no-print">
+<!-- Keep <header> positioned: the mobile panel anchors to it. -->
+<header data-site-header class="no-print relative">
   <div class="container-page flex h-16 items-center justify-between lg:h-20">
     <Logo />
     <div class="lg:gap-gutter flex items-center gap-4">
@@ -86,46 +87,34 @@ const menuRowClass =
       </button>
     </div>
   </div>
-
-  <!-- In-flow panel: expands below the bar and pushes the page (spec §2 —
-       no floating card, no rounding, no shadow). Closed state lives in
-       markup: grid-rows-[0fr] collapses the single row while invisible
-       keeps the links out of the a11y tree and tab order. The script
-       swaps the row-tracking classes so the height transition runs both
-       ways; visibility rides the same transition so the panel only drops
-       out of the tree after it has finished hiding. -->
   <nav
     id="mobile-menu"
     data-menu-panel
     aria-label="Primary"
-    class="text-primary invisible grid grid-rows-[0fr] font-medium transition-[grid-template-rows,visibility] duration-200 ease-out motion-reduce:transition-none sm:hidden"
+    class="text-primary bg-background border-outline-variant invisible absolute inset-x-0 top-full z-40 grid grid-rows-[0fr] border-b font-medium transition-[grid-template-rows,visibility] duration-200 ease-out motion-reduce:transition-none sm:hidden"
   >
     <div class="overflow-hidden">
-      <!-- Full-bleed rules top and bottom (Footer's border-t recipe);
-           dividers between rows align with the page margins. -->
-      <div class="border-outline-variant border-y">
-        <div class="divide-outline-variant container-page divide-y">
-          {
-            links.map(({ href, label }) => (
-              <a
-                class={menuRowClass}
-                href={href}
-                aria-current={isActive(href) ? "page" : undefined}
-              >
-                <span class={isActive(href) ? activeLinkClass : "font-label"}>
-                  {label}
-                </span>
-              </a>
-            ))
-          }
-        </div>
+      <div class="divide-outline-variant divide-y">
+        {
+          links.map(({ href, label }) => (
+            <a
+              class={menuRowClass}
+              href={href}
+              aria-current={isActive(href) ? "page" : undefined}
+            >
+              <span class={isActive(href) ? activeLinkClass : "font-label"}>
+                {label}
+              </span>
+            </a>
+          ))
+        }
       </div>
     </div>
   </nav>
 </header>
 
 <script>
-  // Mobile menu (in-flow panel, see data-menu-panel markup note).
+  // Mobile menu (overlay panel, see data-menu-panel markup note).
   // Toggling classes instead of the hidden attribute lets the CSS
   // transition run; aria-expanded stays the source of truth for state.
   const header = document.querySelector<HTMLElement>("[data-site-header]");
