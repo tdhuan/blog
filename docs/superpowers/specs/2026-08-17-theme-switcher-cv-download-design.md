@@ -195,6 +195,9 @@ sane, not just the CV).
 - The header contact block mirrors the `lg` row in print (`print:flex-row …`
   on the header wrapper, `print:min-w-60` on `<address>`), with a thin
   `border-l` rule separating it from the name block.
+- Each section heading (`Work Experience`, `Education`) trails a thin rule to
+  the right margin in print (`print:flex` heading + `print:border-t` filler
+  span).
 - Trims decorative top padding on `main` in print.
 
 ## 5. Download button (`cv.astro`)

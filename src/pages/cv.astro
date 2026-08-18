@@ -111,9 +111,13 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
     >
       <h2
         id="experience-title"
-        class="font-headline text-primary sm:text-26 text-2xl lg:text-3xl"
+        class="font-headline text-primary sm:text-26 text-2xl lg:text-3xl print:flex print:items-center print:gap-3"
       >
         Work Experience
+        <span
+          aria-hidden="true"
+          class="print:border-outline-variant/40 print:flex-1 print:border-t"
+        ></span>
       </h2>
       <ul class="mt-6" role="list">
         {
@@ -181,9 +185,13 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
     >
       <h2
         id="education-title"
-        class="font-headline text-primary sm:text-26 text-2xl lg:text-3xl"
+        class="font-headline text-primary sm:text-26 text-2xl lg:text-3xl print:flex print:items-center print:gap-3"
       >
         Education
+        <span
+          aria-hidden="true"
+          class="print:border-outline-variant/40 print:flex-1 print:border-t"
+        ></span>
       </h2>
       <ul class="mt-9 space-y-8" role="list">
         {
