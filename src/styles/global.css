@@ -66,10 +66,14 @@
   --font-headline: "Libre Caslon Text", serif;
 
   /* Type scale — custom sizes beyond Tailwind's default scale */
-  --text-22: 1.375rem; /* 22px */
-  --text-26: 1.625rem; /* 26px */
-  --text-56: 3.5rem; /* 56px */
-  --text-64: 4rem; /* 64px */
+  --text-22: 1.375rem;
+  /* 22px */
+  --text-26: 1.625rem;
+  /* 26px */
+  --text-56: 3.5rem;
+  /* 56px */
+  --text-64: 4rem;
+  /* 64px */
 }
 
 /*
@@ -170,6 +174,7 @@ html[data-theme="dark"] .background-drop {
 }
 
 @layer base {
+
   html,
   body {
     margin: 0;
@@ -189,11 +194,11 @@ html[data-theme="dark"] .background-drop {
     overscroll-behavior: none;
   }
 
-  main > :first-child {
+  main> :first-child {
     margin-top: 0 !important;
   }
 
-  main > :last-child {
+  main> :last-child {
     margin-bottom: 0 !important;
   }
 }
@@ -212,6 +217,7 @@ html {
    ~250ms only while a swap happens, so per-element transition utilities
    (nav underline, ArrowLink) are untouched the rest of the time. */
 @media (prefers-reduced-motion: no-preference) {
+
   html.theme-anim,
   html.theme-anim *,
   html.theme-anim *::before,
