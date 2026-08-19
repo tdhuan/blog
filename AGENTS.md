@@ -6,12 +6,12 @@ Guidance for Claude Code and other coding agents working in this repository.
 
 Package manager is pnpm (workspace enabled via pnpm-workspace.yaml). Node >= 22.12.0.
 
-- `pnpm dev` — start dev server in background mode (manage with `astro dev stop`, `astro dev status`, `astro dev logs`)
+- `pnpm dev` — start dev server (foreground, port 4321). For background mode: `pnpm astro dev --background`, managed via `pnpm astro dev stop` / `status` / `logs`. Background servers detach from the shell — if a port stays occupied, find the process with `lsof -nP -iTCP:4321 -sTCP:LISTEN` and kill it.
 - `pnpm build` — production build
 - `pnpm preview` — preview the built site
 - `pnpm check` — type-check (`astro check`; there is no test suite)
 - `pnpm exec eslint .` — lint
-- `pnpm exec prettier . --write` — format (Prettier plugins: astro, tailwindcss class sorting)
+- `pnpm format` — format (`prettier . --write`); `pnpm format:check` to check only (Prettier plugins: astro, tailwindcss class sorting)
 
 ## Skills
 
@@ -36,6 +36,7 @@ Static Astro site (no SSR, no UI-framework integrations). Everything is `.astro`
 - `src/pages/` — file-based routing (`index`, `blog`, `notes`, `about`, `cv`). `blog`/`notes` are placeholders; no content collections set up yet.
 - `src/layouts/Layout.astro` — the single layout every page uses. Owns `<head>`, Google Fonts loading, the `Header`/`Footer` chrome, and the fixed noise `background-drop` layer. Takes `title`, `bodyClass`, `bodyStyle`, `mainClass` props.
 - `src/components/` — shared Astro components.
+- `src/data/cv.ts` — single source of truth for CV content; `cv.astro` renders it on screen and in print/PDF (the "Download" button opens the browser print dialog). Edit CV content here only.
 - Imports use the `@/` alias for `src/*` (configured in tsconfig.json).
 
 ### Styling
@@ -45,6 +46,10 @@ Tailwind CSS v4 via the Vite plugin (no `tailwind.config` file). The design syst
 - Color tokens — palette (`--color-brown-*`), semantic (`--color-primary`, `--color-surface`, `--color-on-*`, ...), and surface hierarchy (`--color-surface-subtle/muted/elevated/strong`) — use these utilities (e.g. `text-on-background`, `bg-surface-muted`) instead of arbitrary color values.
 - Layout tokens (`--container-page`, `--spacing-margin-*`, `--spacing-gutter`) — e.g. `max-w-page`, `px-margin-mobile lg:px-margin-desktop`.
 - Font tokens (`--font-regular`, `--font-label`, `--font-headline`) — mapped to fonts loaded from Google Fonts in `Layout.astro`.
+
+Theming: three themes — sepia (the default `:root` values), light, and dark — selected by `html[data-theme]`, which `ThemeSwitcher` persists to localStorage. Theme values live in three places that must stay in lockstep: the `:root --light-*` raws, the `html[data-theme="light"]`/`html[data-theme="dark"]` mapping blocks in `global.css`, and the `html:root` block in `print.css`. A token added or changed in one must reach all of them.
+
+`src/styles/print.css` (also imported once in `Layout.astro`) is the print stylesheet; the CV page's print output is styled almost entirely through `print:` variants plus this file.
 
 UI conventions:
 
