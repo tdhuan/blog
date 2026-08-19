@@ -182,6 +182,11 @@ html[data-theme="dark"] .background-drop {
     overflow-x: clip;
   }
 
+  /* Soft, paper-like selection wash; --color-accent-soft resolves per theme */
+  ::selection {
+    background-color: var(--color-accent-soft);
+  }
+
   .background-drop {
     inset: 0;
     z-index: -20;
