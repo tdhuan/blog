@@ -184,7 +184,7 @@ html[data-theme="dark"] .background-drop {
 
   /* Soft, paper-like selection wash; --color-accent-soft resolves per theme */
   ::selection {
-    background-color: var(--color-accent-soft);
+    background-color: color-mix(in srgb, var(--color-accent-soft) 80%, transparent);
   }
 
   .background-drop {
