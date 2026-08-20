@@ -58,12 +58,13 @@
   --spacing-unit: 8px;
 
   /* Font families */
-  --font-regular:
-    "Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Open Sans", "Helvetica Neue",
-    sans-serif;
-  --font-label: "Spline Sans", sans-serif;
-  --font-headline: "Libre Caslon Text", serif;
+  --font-sans:
+    "Spline Sans", "SF Pro Display", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Open Sans",
+    "Helvetica Neue", sans-serif;
+  --font-serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-mono:
+    "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 
   /* Type scale — custom sizes beyond Tailwind's default scale */
   --text-22: 1.375rem;
@@ -174,7 +175,6 @@ html[data-theme="dark"] .background-drop {
 }
 
 @layer base {
-
   html,
   body {
     margin: 0;
@@ -186,7 +186,11 @@ html[data-theme="dark"] .background-drop {
      Blends toward the background (not transparent) so the wash is opaque —
      one consistent tint over any content beneath it. */
   ::selection {
-    background-color: color-mix(in srgb, var(--color-accent-soft) 80%, var(--color-background));
+    background-color: color-mix(
+      in srgb,
+      var(--color-accent-soft) 80%,
+      var(--color-background)
+    );
   }
 
   .background-drop {
@@ -202,11 +206,11 @@ html[data-theme="dark"] .background-drop {
     overscroll-behavior: none;
   }
 
-  main> :first-child {
+  main > :first-child {
     margin-top: 0 !important;
   }
 
-  main> :last-child {
+  main > :last-child {
     margin-bottom: 0 !important;
   }
 }
@@ -225,7 +229,6 @@ html {
    ~250ms only while a swap happens, so per-element transition utilities
    (nav underline, ArrowLink) are untouched the rest of the time. */
 @media (prefers-reduced-motion: no-preference) {
-
   html.theme-anim,
   html.theme-anim *,
   html.theme-anim *::before,

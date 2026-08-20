@@ -21,12 +21,12 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
       >
         <div>
           <p
-            class="font-label text-on-background-faint text-xs font-medium tracking-wide uppercase print:text-sm"
+            class="text-on-background-faint font-mono text-xs font-medium tracking-wide uppercase print:text-sm"
           >
             {profile.role}
           </p>
           <h1
-            class="font-headline text-primary sm:text-56 lg:text-64 mt-4 text-5xl leading-[0.9] tracking-tight print:font-semibold"
+            class="text-primary sm:text-56 lg:text-64 mt-4 font-serif text-5xl leading-[0.9] tracking-tight print:font-semibold"
           >
             {profile.name}
           </h1>
@@ -41,7 +41,7 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
           >
             {
               profile.openToOpportunities && (
-                <p class="font-label text-on-background-muted flex items-center gap-2 text-xs font-medium tracking-wide uppercase">
+                <p class="text-on-background-muted flex items-center gap-2 font-mono text-xs font-medium tracking-wide uppercase">
                   <span
                     aria-hidden="true"
                     class="bg-primary size-1.5 rounded-full"
@@ -54,7 +54,7 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
               type="button"
               data-print-cv
               title="Opens the print dialog — choose “Save as PDF”"
-              class="font-label border-primary/40 text-primary hover:border-primary focus-visible:border-primary no-print inline-flex items-center gap-2 border-b px-0 py-1 text-xs font-medium transition-colors"
+              class="border-primary/40 text-primary hover:border-primary focus-visible:border-primary no-print inline-flex items-center gap-2 border-b px-0 py-1 font-sans text-xs font-medium transition-colors"
             >
               Download CV
               <svg
@@ -76,7 +76,7 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
         </div>
 
         <address
-          class="font-label print:border-outline-variant/40 grid break-inside-avoid gap-3 text-sm not-italic lg:min-w-60 print:min-w-60 print:border-l print:pl-6"
+          class="print:border-outline-variant/40 grid break-inside-avoid gap-3 font-sans text-sm not-italic lg:min-w-60 print:min-w-60 print:border-l print:pl-6"
         >
           {
             profile.contacts.map((contact) => (
@@ -129,7 +129,7 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
         {
           skills.map(({ label, items }) => (
             <div class="flex break-inside-avoid flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-6">
-              <dt class="font-label text-on-background-faint w-44 shrink-0 text-xs font-medium tracking-wide uppercase print:text-sm">
+              <dt class="text-on-background-faint w-44 shrink-0 font-mono text-xs font-medium tracking-wide uppercase print:text-sm">
                 {label}
               </dt>
               <dd class="text-on-background-muted text-sm leading-relaxed">
@@ -171,14 +171,14 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
                   ]}
                 >
                   <div class="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
-                    <h3 class="font-headline text-primary sm:text-22 text-xl leading-tight lg:text-2xl print:font-semibold">
+                    <h3 class="text-primary sm:text-22 font-serif text-xl leading-tight lg:text-2xl print:font-semibold">
                       {title}
                     </h3>
-                    <p class="font-label text-on-background-faint shrink-0 text-sm">
+                    <p class="text-on-background-faint shrink-0 font-mono text-sm">
                       {period}
                     </p>
                   </div>
-                  <p class="font-label text-on-background-faint mt-2 text-sm">
+                  <p class="text-on-background-faint mt-2 font-sans text-sm">
                     {company}
                   </p>
                   <p class="text-on-background-variant mt-4 max-w-3xl leading-relaxed print:text-sm">
@@ -192,7 +192,7 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
                     </ul>
                   )}
                   <dl class="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                    <dt class="font-label text-on-background-faint text-xs font-medium tracking-wide uppercase print:text-sm">
+                    <dt class="text-on-background-faint font-mono text-xs font-medium tracking-wide uppercase print:text-sm">
                       Tech stack
                     </dt>
                     <dd class="text-on-background-muted text-sm leading-relaxed">
@@ -218,14 +218,14 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
           education.map(({ institution, degree, period }) => (
             <li>
               <div class="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
-                <h3 class="font-headline text-primary sm:text-22 text-xl leading-tight lg:text-2xl print:font-semibold">
+                <h3 class="text-primary sm:text-22 font-serif text-xl leading-tight lg:text-2xl print:font-semibold">
                   {institution}
                 </h3>
-                <p class="font-label text-on-background-faint shrink-0 text-sm">
+                <p class="text-on-background-faint shrink-0 font-mono text-sm">
                   {period}
                 </p>
               </div>
-              <p class="font-label text-on-background-faint mt-2 text-sm">
+              <p class="text-on-background-faint mt-2 font-sans text-sm">
                 {degree}
               </p>
             </li>

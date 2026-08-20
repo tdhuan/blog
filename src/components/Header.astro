@@ -15,8 +15,8 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
 // Shared underline geometry; width lives in the two variants below.
 const underlineClass =
   "after:bg-primary relative inline-block after:absolute after:-bottom-1 after:left-0 after:h-px after:transition-all after:duration-300 after:ease-out";
-const linkClass = `font-label text-primary ${underlineClass} after:w-0 hover:after:w-full focus-visible:after:w-full`;
-const activeLinkClass = `font-label text-primary ${underlineClass} after:w-full`;
+const linkClass = `font-sans text-primary ${underlineClass} after:w-0 hover:after:w-full focus-visible:after:w-full`;
+const activeLinkClass = `font-sans text-primary ${underlineClass} after:w-full`;
 
 // Mobile rows: the anchor is the tap target (py-3 + 24px line box ≈ 48px,
 // above the 44px minimum); the span carries the link typography so the
@@ -102,7 +102,7 @@ const menuRowClass =
               href={href}
               aria-current={isActive(href) ? "page" : undefined}
             >
-              <span class={isActive(href) ? activeLinkClass : "font-label"}>
+              <span class={isActive(href) ? activeLinkClass : "font-sans"}>
                 {label}
               </span>
             </a>
