@@ -8,11 +8,9 @@ const links = [
   { href: "/cv", label: "CV" },
 ] as const;
 
-// Current page keeps the underline treatment permanently (spec §2).
 const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
 const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
 
-// Shared underline geometry; width lives in the two variants below.
 const underlineClass =
   "after:bg-primary relative inline-block after:absolute after:-bottom-1 after:left-0 after:h-px after:transition-all after:duration-300 after:ease-out";
 const linkClass = `font-sans text-primary ${underlineClass} after:w-0 hover:after:w-full focus-visible:after:w-full`;
@@ -153,7 +151,6 @@ const menuRowClass =
       }
     });
 
-    // Tap/click outside the header closes the panel.
     document.addEventListener("pointerdown", (event) => {
       if (isOpen() && !header.contains(event.target as Node)) close();
     });

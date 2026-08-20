@@ -1,5 +1,5 @@
 /*
- * Print output (spec §4): light surfaces regardless of the visitor's active
+ * Print output: light surfaces regardless of the visitor's active
  * data-theme. Surfaces and outlines map to the same --light-* raw values
  * used by html[data-theme="light"] in global.css. Text tokens deliberately
  * DIVERGE from --light-*: paper prints a single ink (#171717) in a single
@@ -15,7 +15,7 @@
   html:root {
     color-scheme: light;
     --color-background: var(--light-background);
-    /* Single ink on paper (spec §4): every text token resolves to #171717. */
+    /* Single ink on paper: every text token resolves to #171717. */
     --color-on-background: #171717;
     --color-on-background-variant: #171717;
     --color-on-background-muted: #171717;
@@ -44,7 +44,6 @@
     margin: 14mm;
   }
 
-  /* Site chrome never belongs on paper. */
   .no-print {
     display: none !important;
   }
@@ -57,7 +56,7 @@
     background: var(--light-surface);
   }
 
-  /* Compacted type for A4 (spec §4): 13px root scales the whole rem-based
+  /* Compacted type for A4: 13px root scales the whole rem-based
      type scale ~13% smaller (body ≈ 12px). */
   html {
     font-size: 13px;

@@ -1,4 +1,4 @@
-// Single source of truth for CV content (spec §3). The CV page and the
+// Single source of truth for CV content. The CV page and the
 // print/PDF output both render from these values — edit here only.
 
 export interface CvContact {
