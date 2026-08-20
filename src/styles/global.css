@@ -178,6 +178,15 @@ html[data-theme="dark"] .background-drop {
     overflow-x: clip;
   }
 
+  /* Keyboard focus indicator, theme-aware: --color-primary resolves per
+     theme (brown in sepia/light, tan in dark) with contrast against every
+     background. Component focus treatments (underline, color shifts) layer
+     on top; none need to draw their own ring. */
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
   /* Soft, paper-like selection wash; --color-accent-soft resolves per theme.
      Blends toward the background (not transparent) so the wash is opaque —
      one consistent tint over any content beneath it. */
