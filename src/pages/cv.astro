@@ -26,7 +26,7 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
             {profile.role}
           </p>
           <h1
-            class="text-primary sm:text-56 lg:text-64 mt-4 font-serif text-5xl leading-[0.9] tracking-tight print:font-semibold"
+            class="text-primary sm:text-56 lg:text-64 mt-4 font-serif text-5xl leading-[0.9] font-semibold tracking-tight"
           >
             {profile.name}
           </h1>
@@ -171,7 +171,7 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
                   ]}
                 >
                   <div class="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
-                    <h3 class="text-primary sm:text-22 font-serif text-xl leading-tight lg:text-2xl print:font-semibold">
+                    <h3 class="text-primary sm:text-22 font-serif text-xl leading-tight font-semibold lg:text-2xl">
                       {title}
                     </h3>
                     <p class="text-on-background-faint shrink-0 font-mono text-sm">
@@ -218,7 +218,7 @@ const contactIcons: Record<"email" | "phone" | "github", string> = {
           education.map(({ institution, degree, period }) => (
             <li>
               <div class="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
-                <h3 class="text-primary sm:text-22 font-serif text-xl leading-tight lg:text-2xl print:font-semibold">
+                <h3 class="text-primary sm:text-22 font-serif text-xl leading-tight font-semibold lg:text-2xl">
                   {institution}
                 </h3>
                 <p class="text-on-background-faint shrink-0 font-mono text-sm">
