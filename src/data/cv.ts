@@ -88,7 +88,7 @@ export const experience: CvExperienceEntry[] = [
       "Helped evolve the web application from its early stages into a production product.",
       "Collaborated with designers to deliver features end to end, from planning and implementation through testing and release",
     ],
-    stack: ["React, Redux"],
+    stack: ["React", "Redux"],
   },
 ];
 

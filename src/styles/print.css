@@ -2,8 +2,8 @@
  * Print output (spec §4): light surfaces regardless of the visitor's active
  * data-theme. Surfaces and outlines map to the same --light-* raw values
  * used by html[data-theme="light"] in global.css. Text tokens deliberately
- * DIVERGE from --light-*: paper uses neutral grays for contrast on white —
- * do not "fix" them back to the brown --light-* values.
+ * DIVERGE from --light-*: paper prints a single ink (#171717) in a single
+ * font (Spline Sans) — do not "fix" them back to the brown --light-* values.
  */
 
 @media print {
@@ -15,15 +15,14 @@
   html:root {
     color-scheme: light;
     --color-background: var(--light-background);
-    /* Neutral grays for paper (spec §4): body #171717, accent and secondary
-       #262626, faint labels #404040. */
+    /* Single ink on paper (spec §4): every text token resolves to #171717. */
     --color-on-background: #171717;
     --color-on-background-variant: #171717;
-    --color-on-background-muted: #262626;
-    --color-on-background-faint: #404040;
+    --color-on-background-muted: #171717;
+    --color-on-background-faint: #171717;
     --color-surface: var(--light-surface);
     --color-on-surface: var(--light-on-surface);
-    --color-primary: #262626;
+    --color-primary: #171717;
     --color-on-primary: var(--light-on-primary);
     --color-secondary: var(--light-secondary);
     --color-on-secondary: var(--light-on-secondary);
@@ -62,6 +61,14 @@
      type scale ~13% smaller (body ≈ 12px). */
   html {
     font-size: 13px;
+  }
+
+  /* Single typeface on paper: serif headings and mono labels print in the
+     sans. Same specificity as the font utilities, later source order (this
+     file imports after global.css) — this wins. */
+  .font-serif,
+  .font-mono {
+    font-family: var(--font-sans);
   }
 
   main {
