@@ -182,6 +182,13 @@ html[data-theme="dark"] .background-drop {
     overflow-x: clip;
   }
 
+  /* Soft, paper-like selection wash; --color-accent-soft resolves per theme.
+     Blends toward the background (not transparent) so the wash is opaque —
+     one consistent tint over any content beneath it. */
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-accent-soft) 80%, var(--color-background));
+  }
+
   .background-drop {
     inset: 0;
     z-index: -20;
