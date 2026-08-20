@@ -49,7 +49,7 @@ Tailwind CSS v4 via the Vite plugin (no `tailwind.config` file). The design syst
 
 Theming: three themes — sepia (the default `:root` values), light, and dark — selected by `html[data-theme]`, which `ThemeSwitcher` persists to localStorage. Theme values live in three places that must stay in lockstep: the `:root --light-*` raws, the `html[data-theme="light"]`/`html[data-theme="dark"]` mapping blocks in `global.css`, and the `html:root` block in `print.css`. A token added or changed in one must reach all of them.
 
-`src/styles/print.css` (also imported once in `Layout.astro`) is the print stylesheet; the CV page's print output is styled almost entirely through `print:` variants plus this file.
+`src/styles/print.css` (also imported once in `Layout.astro`) is the print stylesheet; the CV page's print output is styled almost entirely through `print:` variants plus this file. The CV uses only two text colors on screen (`text-primary` for headings and accents, `text-on-background` everywhere else) and prints in a single ink (`#171717`) and a single font (`font-sans`).
 
 UI conventions:
 
