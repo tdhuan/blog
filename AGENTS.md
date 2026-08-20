@@ -57,6 +57,7 @@ UI conventions:
 - Floating layers (dropdowns, popovers) use the `bg-surface` + `border-outline-variant` recipe rather than shadows; attach full-width to the chrome they belong to.
 - Hairline separation via `border-t` / `divide-y divide-outline-variant` (see Footer, Header's mobile menu).
 - Nav links share the `after:` underline treatment (`after:w-0 hover:after:w-full`); the active page keeps `after:w-full` plus `aria-current="page"` (see Header).
+- Keyboard focus: a global `:focus-visible` rule in `global.css` draws the outline (`2px solid var(--color-primary)`, offset 2px), theme-aware — components don't draw their own focus rings. Exception: a focusable `sr-only` input (ThemeSwitcher radios) can't show that outline; transfer it to the visible sibling with `peer-focus-visible:`.
 - Interactive state: a small inline `<script>` per component, hooked to `data-*` attributes, with `aria-expanded`/`aria-checked` as the source of truth. When animation matters, toggle utility classes (`invisible`, `grid-rows-[0fr]`) instead of `hidden` — `visibility` keeps closed UI out of the tab order while transitions still run. Pair every transition with `motion-reduce:transition-none`.
 - Breakpoints are mobile-first `sm:`/`lg:` pairs (`hidden sm:flex` with its matching `sm:hidden`). Custom type sizes only via px-named `--text-*` tokens (`text-56`), never `text-[56px]`; spacing stays on Tailwind's default scale.
 - Class order is machine-managed: `prettier-plugin-tailwindcss` sorts it on format — never hand-align.
