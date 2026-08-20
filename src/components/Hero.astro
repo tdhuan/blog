@@ -8,17 +8,17 @@ import ArrowLink from "@/components/ArrowLink.astro";
   <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-8">
     <div class="flex flex-col items-center gap-6 lg:items-start lg:pr-12">
       <div
-        class="font-label text-on-background-faint text-xs font-medium tracking-wide uppercase sm:text-sm"
+        class="text-on-background-faint font-mono text-xs font-medium tracking-wide uppercase sm:text-sm"
       >
         Hello, I'm Huan
       </div>
       <h1
-        class="font-headline text-primary text-center text-4xl font-semibold tracking-tight text-balance sm:text-left sm:text-5xl lg:text-7xl"
+        class="text-primary text-center font-serif text-4xl font-semibold tracking-tight text-balance sm:text-left sm:text-5xl lg:text-7xl"
       >
         Welcome to <br class="hidden lg:block" /> my little space.
       </h1>
       <p
-        class="font-regular text-on-background-muted max-w-xl text-center text-base lg:text-left lg:text-lg"
+        class="text-on-background-muted max-w-xl text-center font-sans text-base lg:text-left lg:text-lg"
       >
         A place where I share thoughts on code, life <br />
         and things I’m learning along the way.
@@ -28,14 +28,13 @@ import ArrowLink from "@/components/ArrowLink.astro";
       >
         <ArrowLink href="/blog" variant="primary">Read latest posts</ArrowLink>
         <a
-          class="text-primary font-label border-primary/20 inline-flex w-full items-center justify-center gap-2 rounded-none border bg-transparent px-8 py-4 transition-opacity hover:opacity-80 focus-visible:opacity-80 sm:w-auto"
+          class="text-primary border-primary/20 inline-flex w-full items-center justify-center gap-2 rounded-none border bg-transparent px-8 py-4 font-sans transition-opacity hover:opacity-80 focus-visible:opacity-80 sm:w-auto"
           href="/about">About me</a
         >
       </div>
     </div>
 
     <div class="flex justify-center lg:justify-end">
-      <!-- Oval backdrop -->
       <div class="relative">
         <div class="absolute inset-0 -z-10 flex items-center justify-center">
           <div
@@ -43,7 +42,6 @@ import ArrowLink from "@/components/ArrowLink.astro";
           >
           </div>
         </div>
-        <!-- Avatar -->
         <div
           class="relative z-0 h-56 w-56 overflow-hidden sm:h-70 sm:w-70 lg:h-95 lg:w-95"
         >

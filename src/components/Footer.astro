@@ -2,13 +2,16 @@
 import Logo from "./Logo.astro";
 
 const socials = [
-  { href: "#", label: "Twitter" },
-  { href: "#", label: "GitHub" },
-  { href: "#", label: "LinkedIn" },
+  { href: "https://x.com/huanatran", label: "Twitter" },
+  { href: "https://github.com/tdhuan", label: "GitHub" },
+  {
+    href: "https://www.linkedin.com/in/huan-tran-432983109/",
+    label: "LinkedIn",
+  },
 ] as const;
 
 const linkClass =
-  "font-label text-sm hover:text-on-background focus-visible:text-primary transition-colors";
+  "font-sans text-sm hover:text-on-background focus-visible:text-primary transition-colors";
 ---
 
 <footer class="border-outline-variant mt-gutter no-print border-t">
@@ -25,6 +28,6 @@ const linkClass =
         ))
       }
     </div>
-    <div class="font-label text-sm">© 2026 Huan Tran. Built with ❤️</div>
+    <div class="font-mono text-sm">Made with &#9829; and Astro</div>
   </div>
 </footer>

@@ -58,26 +58,23 @@
   --spacing-unit: 8px;
 
   /* Font families */
-  --font-regular:
-    "Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Open Sans", "Helvetica Neue",
-    sans-serif;
-  --font-label: "Spline Sans", sans-serif;
-  --font-headline: "Libre Caslon Text", serif;
+  --font-sans:
+    "Spline Sans", "SF Pro Display", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Open Sans",
+    "Helvetica Neue", sans-serif;
+  --font-serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-mono:
+    "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 
   /* Type scale — custom sizes beyond Tailwind's default scale */
   --text-22: 1.375rem;
-  /* 22px */
   --text-26: 1.625rem;
-  /* 26px */
   --text-56: 3.5rem;
-  /* 56px */
   --text-64: 4rem;
-  /* 64px */
 }
 
 /*
- * Themes (spec §1). Sepia needs no block — its values ARE the :root
+ * Themes. Sepia needs no block — its values ARE the :root
  * defaults in @theme above. The raw --light-* values are declared once
  * here and consumed by BOTH html[data-theme="light"] and the print
  * stylesheet (src/styles/print.css), so screen-light and paper-light
@@ -164,7 +161,7 @@ html[data-theme="dark"] {
 }
 
 /* Same noise SVG as .background-drop but at opacity 0.05 — 10% reads
-   too strong on the espresso background (spec §1 acceptance criterion). */
+   too strong on the espresso background. */
 html[data-theme="dark"] .background-drop {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
 }
@@ -174,7 +171,6 @@ html[data-theme="dark"] .background-drop {
 }
 
 @layer base {
-
   html,
   body {
     margin: 0;
@@ -186,7 +182,11 @@ html[data-theme="dark"] .background-drop {
      Blends toward the background (not transparent) so the wash is opaque —
      one consistent tint over any content beneath it. */
   ::selection {
-    background-color: color-mix(in srgb, var(--color-accent-soft) 80%, var(--color-background));
+    background-color: color-mix(
+      in srgb,
+      var(--color-accent-soft) 80%,
+      var(--color-background)
+    );
   }
 
   .background-drop {
@@ -202,11 +202,11 @@ html[data-theme="dark"] .background-drop {
     overscroll-behavior: none;
   }
 
-  main> :first-child {
+  main > :first-child {
     margin-top: 0 !important;
   }
 
-  main> :last-child {
+  main > :last-child {
     margin-bottom: 0 !important;
   }
 }
@@ -221,11 +221,10 @@ html {
   }
 }
 
-/* Theme-swap animation (spec §2). The class is added by the switcher for
+/* Theme-swap animation. The class is added by the switcher for
    ~250ms only while a swap happens, so per-element transition utilities
    (nav underline, ArrowLink) are untouched the rest of the time. */
 @media (prefers-reduced-motion: no-preference) {
-
   html.theme-anim,
   html.theme-anim *,
   html.theme-anim *::before,

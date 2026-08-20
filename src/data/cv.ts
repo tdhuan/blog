@@ -1,4 +1,4 @@
-// Single source of truth for CV content (spec §3). The CV page and the
+// Single source of truth for CV content. The CV page and the
 // print/PDF output both render from these values — edit here only.
 
 export interface CvContact {
@@ -88,7 +88,7 @@ export const experience: CvExperienceEntry[] = [
       "Helped evolve the web application from its early stages into a production product.",
       "Collaborated with designers to deliver features end to end, from planning and implementation through testing and release",
     ],
-    stack: ["React, Redux"],
+    stack: ["React", "Redux"],
   },
 ];
 
