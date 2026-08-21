@@ -1,7 +1,359 @@
 ---
+import { Image } from "astro:assets";
 import Layout from "@/layouts/Layout.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import ArrowLink from "@/components/ArrowLink.astro";
+import Avatar512 from "@/assets/avatar-512.png";
+
+const workValues = [
+  {
+    title: "Build",
+    body: "I enjoy building things and seeing ideas become something real.",
+    icon: '<path d="m15 12-8.373 8.373a1 1 0 1 1-3-3L12 9"></path><path d="m18 15 4-4"></path><path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172V7l-2.26-2.26a6 6 0 0 0-4.202-1.756L9 2.96l.92.82A6.18 6.18 0 0 1 12 8.4V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5"></path>',
+  },
+  {
+    title: "Make it better",
+    body: "I like improving tools, workflows, and the small things that make development easier.",
+    icon: '<path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path><path d="M20 3v4"></path><path d="M22 5h-4"></path><path d="M4 17v2"></path><path d="M5 18H3"></path>',
+  },
+  {
+    title: "Keep it simple",
+    body: "I prefer simple solutions and try not to add complexity without a good reason.",
+    icon: '<path d="M5 12h14"></path>',
+  },
+] as const;
+
+const enjoyments = [
+  {
+    title: "Developer Experience",
+    body: "Making everyday development a little easier.",
+    icon: '<polyline points="4 17 10 11 4 5"></polyline><line x1="12" x2="20" y1="19" y2="19"></line>',
+  },
+  {
+    title: "Tooling",
+    body: "Building small tools when existing ones don't quite fit.",
+    icon: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>',
+  },
+  {
+    title: "Workflow",
+    body: "Finding better ways to go from an idea to something shipped.",
+    icon: '<line x1="6" x2="6" y1="3" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path>',
+  },
+  {
+    title: "Design",
+    body: "Caring about the small details that make an interface feel right.",
+    icon: '<path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path><path d="m15 5 4 4"></path>',
+  },
+] as const;
+
+const pastimes = [
+  {
+    title: "Cooking",
+    body: "I enjoy making food and trying different recipes.",
+    icon: '<path d="M17 21a1 1 0 0 0 1-1v-5.35c0-.457.316-.844.727-1.041a4 4 0 0 0-2.134-7.589 5 5 0 0 0-9.186 0 4 4 0 0 0-2.134 7.588c.411.198.727.585.727 1.041V20a1 1 0 0 0 1 1Z"></path><path d="M6 17h12"></path>',
+  },
+  {
+    title: "Walking",
+    body: "A good way to slow down and think.",
+    icon: '<path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z"></path><path d="M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z"></path><path d="M16 17h4"></path><path d="M4 13h4"></path>',
+  },
+  {
+    title: "Table tennis",
+    body: "Mostly for fun. Sometimes a little too competitive.",
+    icon: '<circle cx="9.5" cy="14.5" r="6"></circle><path d="m13.7 10.3 3-3"></path><circle cx="19.5" cy="4.5" r="1.5"></circle>',
+  },
+] as const;
+
+const stack = [
+  {
+    label: "React",
+    icon: '<circle cx="12" cy="12" r="1"></circle><path d="M20.2 20.2c2.04-2.03.02-7.36-4.5-11.9-4.54-4.52-9.87-6.54-11.9-4.5-2.04 2.03-.02 7.36 4.5 11.9 4.54 4.52 9.87 6.54 11.9 4.5Z"></path><path d="M15.7 15.7c4.52-4.54 6.54-9.87 4.5-11.9-2.03-2.04-7.36-.02-11.9 4.5-4.52 4.54-6.54 9.87-4.5 11.9 2.03 2.04 7.36.02 11.9-4.5Z"></path>',
+  },
+  {
+    label: "TypeScript",
+    icon: '<rect width="18" height="18" x="3" y="3" rx="2"></rect><text x="16.5" y="16.5" text-anchor="end" font-size="9" font-family="IBM Plex Mono, monospace" fill="currentColor" stroke="none">TS</text>',
+  },
+  {
+    label: "Frontend",
+    icon: '<rect width="20" height="14" x="2" y="3" rx="2"></rect><line x1="8" x2="16" y1="21" y2="21"></line><line x1="12" x2="12" y1="17" y2="21"></line>',
+  },
+  {
+    label: "Developer Experience",
+    icon: '<polyline points="4 17 10 11 4 5"></polyline><line x1="12" x2="20" y1="19" y2="19"></line>',
+  },
+  {
+    label: "Design Systems",
+    icon: '<path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"></path><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"></path><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"></path>',
+  },
+  {
+    label: "Tooling",
+    icon: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>',
+  },
+  {
+    label: "Workflow",
+    icon: '<line x1="6" x2="6" y1="3" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path>',
+  },
+  {
+    label: "Web Platform",
+    icon: '<circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path>',
+  },
+] as const;
 ---
 
 <Layout title="About | Huan Tran">
-  <div>About</div>
+  <header class="container-page pt-12 pb-12 lg:pt-32 lg:pb-24">
+    <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-8">
+      <div class="flex flex-col items-center gap-6 lg:items-start lg:pr-12">
+        <div
+          class="text-on-background-faint font-mono text-xs font-medium tracking-wide uppercase sm:text-sm"
+        >
+          About
+        </div>
+        <h1
+          class="text-primary lg:text-56 text-center font-serif text-4xl font-semibold tracking-tight text-balance sm:text-left sm:text-5xl"
+        >
+          Hi, I'm Huan.
+        </h1>
+        <p
+          class="text-on-background-muted max-w-xl text-center font-sans text-base lg:text-left lg:text-lg"
+        >
+          I'm a software engineer based in Ho Chi Minh City, Vietnam.
+        </p>
+        <p
+          class="text-on-background-muted max-w-xl text-center font-sans text-base lg:text-left lg:text-lg"
+        >
+          I studied at the University of Science and started working as a
+          software engineer in late 2019.
+        </p>
+        <p
+          class="text-on-background-muted max-w-xl text-center font-sans text-base lg:text-left lg:text-lg"
+        >
+          Over the years, I’ve worked on both frontend and backend, building web
+          products and working across different parts of a product. Frontend has
+          always been my main focus, but I enjoy understanding how things work
+          beyond the UI and being able to work across the stack when needed.
+        </p>
+        <div
+          class="mt-4 flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row"
+        >
+          <ArrowLink href="/cv" variant="primary">View CV</ArrowLink>
+        </div>
+      </div>
+
+      <div class="flex justify-center lg:justify-end">
+        <div class="relative">
+          <div class="absolute inset-0 -z-10 flex items-center justify-center">
+            <div
+              class="bg-drop/90 h-52 w-28 rotate-45 rounded-[50%] opacity-60 sm:h-64 sm:w-36 lg:h-90 lg:w-52"
+            >
+            </div>
+          </div>
+          <div
+            class="relative z-0 aspect-3/4 w-60 overflow-hidden sm:w-72 lg:w-80"
+          >
+            <Image
+              alt="Portrait of Huan Tran"
+              class="h-full w-full object-cover"
+              src={Avatar512}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div
+    class="container-page divide-outline-variant/30 border-outline-variant/30 flex flex-col divide-y border-t"
+  >
+    <section class="py-18 lg:py-28" aria-labelledby="work-heading">
+      <SectionHeading id="work-heading" rule={false}>
+        How I like to work
+      </SectionHeading>
+      <div
+        class="divide-outline-variant/30 mt-9 grid grid-cols-1 divide-y lg:grid-cols-3 lg:divide-x lg:divide-y-0"
+      >
+        {
+          workValues.map(({ title, body, icon }, i) => (
+            <div
+              class:list={[
+                "flex gap-4 py-8 first:pt-0 last:pb-0 lg:py-0",
+                i > 0 && "lg:pl-10",
+                i < workValues.length - 1 && "lg:pr-10",
+              ]}
+            >
+              <svg
+                aria-hidden="true"
+                class="text-on-background-faint mt-1 size-5 shrink-0"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                set:html={icon}
+              />
+              <div>
+                <h3 class="text-primary text-lg font-medium">{title}</h3>
+                <p class="text-on-background-muted mt-2 leading-relaxed">
+                  {body}
+                </p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="py-18 lg:py-28" aria-labelledby="engineering-heading">
+      <SectionHeading id="engineering-heading" rule={false}>
+        Engineering
+      </SectionHeading>
+      <div
+        class="mt-9 grid grid-cols-1 gap-10 lg:grid-cols-[1fr_auto] lg:gap-24"
+      >
+        <div
+          class="text-on-background-muted max-w-xl space-y-5 text-base leading-relaxed sm:text-lg"
+        >
+          <p>
+            My work has mostly been around frontend engineering, building web
+            products and thinking about how they grow.
+          </p>
+          <p>Frontend is not just about writing UI for me.</p>
+          <p>
+            I enjoy thinking about the whole product, from the way an interface
+            feels to the way a codebase grows.
+          </p>
+          <p>
+            I'm especially interested in developer experience, tooling, design
+            systems, and workflows.
+          </p>
+        </div>
+        <ul
+          class="text-on-background-muted border-outline-variant/30 grid grid-cols-1 gap-x-8 gap-y-4 border-t pt-6 font-mono text-sm sm:grid-cols-2 lg:justify-self-end lg:border-t-0 lg:pt-0"
+          role="list"
+        >
+          {
+            stack.map(({ label, icon }) => (
+              <li class="flex items-center gap-3">
+                <svg
+                  aria-hidden="true"
+                  class="text-on-background-faint size-4 shrink-0"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  set:html={icon}
+                />
+                {label}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <div
+      class="divide-outline-variant/30 lg:before:bg-outline-variant/30 relative grid grid-cols-1 divide-y lg:grid-cols-2 lg:divide-y-0 lg:before:absolute lg:before:inset-y-12 lg:before:left-1/2 lg:before:block lg:before:w-px"
+    >
+      <section class="py-18 lg:py-28 lg:pr-16" aria-labelledby="enjoy-heading">
+        <SectionHeading id="enjoy-heading" rule={false}>
+          Things I enjoy
+        </SectionHeading>
+        <div class="mt-9 flex flex-col gap-8">
+          {
+            enjoyments.map(({ title, body, icon }) => (
+              <div class="flex gap-4">
+                <svg
+                  aria-hidden="true"
+                  class="text-primary mt-1 size-5 shrink-0"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  set:html={icon}
+                />
+                <div>
+                  <h3 class="text-primary text-lg font-medium">{title}</h3>
+                  <p class="text-on-background-muted mt-2 leading-relaxed">
+                    {body}
+                  </p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <section
+        class="py-18 lg:py-28 lg:pl-16"
+        aria-labelledby="outside-heading"
+      >
+        <SectionHeading id="outside-heading" rule={false}>
+          Outside of code
+        </SectionHeading>
+        <div
+          class="mt-9 flex flex-col gap-8 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:gap-y-10"
+        >
+          {
+            pastimes.map(({ title, body, icon }) => (
+              <div class="flex gap-4 lg:block">
+                <svg
+                  aria-hidden="true"
+                  class="text-on-background-faint mt-1 size-5 shrink-0 lg:mt-0"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  set:html={icon}
+                />
+                <div class="lg:mt-4">
+                  <h3 class="text-primary text-lg font-medium">{title}</h3>
+                  <p class="text-on-background-muted mt-2 leading-relaxed">
+                    {body}
+                  </p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+    </div>
+
+    <section class="py-18 lg:py-28" aria-labelledby="learning-heading">
+      <SectionHeading id="learning-heading" rule={false}>
+        Always learning
+      </SectionHeading>
+      <div
+        class="text-on-background-muted mt-9 max-w-xl space-y-5 text-base leading-relaxed sm:max-w-fit sm:text-lg"
+      >
+        <p>
+          I like learning new things, although I’m not always consistent about
+          it. Sometimes I get really into something and spend days learning and
+          experimenting. Sometimes I take a break and come back to it later.
+        </p>
+        <p>
+          I try to keep the mindset that I’m always a beginner in something. No
+          matter how long I’ve been working, there are still many things I don’t
+          know.
+        </p>
+        <p>Everyone has gaps in their knowledge. I have plenty of them too.</p>
+        <p>
+          That’s why I enjoy asking questions, talking to people, and learning
+          from different perspectives. I’m always happy to learn something new
+          or hear a different way of looking at a problem.
+        </p>
+        <p>
+          For me, learning is less about knowing everything and more about
+          staying curious and being open to the things &ldquo;I don’t know
+          yet.&rdquo;
+        </p>
+      </div>
+    </section>
+  </div>
 </Layout>
