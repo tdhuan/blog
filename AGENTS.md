@@ -33,9 +33,9 @@ When implementing Astro-specific code:
 
 Static Astro site (no SSR, no UI-framework integrations). Everything is `.astro` components:
 
-- `src/pages/` — file-based routing (`index`, `blog`, `notes`, `about`, `cv`). `blog`/`notes` are placeholders; no content collections set up yet.
+- `src/pages/` — file-based routing (`index`, `blog`, `notes`, `about`, `cv`). `blog`/`notes` are placeholders; no content collections set up yet. `about` is a fully-built editorial page — hero plus hairline-divided sections; its copy lives directly in the page file (unlike the CV, which renders from `src/data/cv.ts`).
 - `src/layouts/Layout.astro` — the single layout every page uses. Owns `<head>`, Google Fonts loading, the `Header`/`Footer` chrome, and the fixed noise `background-drop` layer. Takes `title`, `bodyClass`, `bodyStyle`, `mainClass` props.
-- `src/components/` — shared Astro components.
+- `src/components/` — shared Astro components. `SectionHeading` takes a `rule` prop (default `true`) for the trailing rule line — the CV keeps it, the About page passes `rule={false}` for plain headings.
 - `src/data/cv.ts` — single source of truth for CV content; `cv.astro` renders it on screen and in print/PDF (the "Download" button opens the browser print dialog). Edit CV content here only.
 - Imports use the `@/` alias for `src/*` (configured in tsconfig.json).
 
@@ -55,7 +55,7 @@ UI conventions:
 
 - Corner language is square: bordered controls use `rounded-none`; `rounded-full` is reserved for deliberate circles (theme pill, CV timeline dots). No `rounded-lg`/`rounded-xl` card containers.
 - Floating layers (dropdowns, popovers) use the `bg-surface` + `border-outline-variant` recipe rather than shadows; attach full-width to the chrome they belong to.
-- Hairline separation via `border-t` / `divide-y divide-outline-variant` (see Footer, Header's mobile menu).
+- Hairline separation via `border-t` / `divide-y divide-outline-variant` (see Footer, Header's mobile menu); vertical hairlines via `divide-x` between columns (see About's work values) or an inset pseudo-element divider between paired panels (see About's "Things I enjoy" / "Outside of code" row).
 - Nav links share the `after:` underline treatment (`after:w-0 hover:after:w-full`); the active page keeps `after:w-full` plus `aria-current="page"` (see Header).
 - Keyboard focus: a global `:focus-visible` rule in `global.css` draws the outline (`2px solid var(--color-primary)`, offset 2px), theme-aware — components don't draw their own focus rings. Exception: a focusable `sr-only` input (ThemeSwitcher radios) can't show that outline; transfer it to the visible sibling with `peer-focus-visible:`.
 - Interactive state: a small inline `<script>` per component, hooked to `data-*` attributes, with `aria-expanded`/`aria-checked` as the source of truth. When animation matters, toggle utility classes (`invisible`, `grid-rows-[0fr]`) instead of `hidden` — `visibility` keeps closed UI out of the tab order while transitions still run. Pair every transition with `motion-reduce:transition-none`.
