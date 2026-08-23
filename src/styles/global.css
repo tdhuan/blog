@@ -209,6 +209,12 @@ html[data-theme="dark"] .background-drop {
 
   body {
     overscroll-behavior: none;
+    /* Paint the page background on an ancestor of the text (the noise
+       .background-drop layer is an opaque sibling, so this is visually
+       identical) — contrast auditors (axe/Lighthouse) only resolve
+       backgrounds from ancestors; without this they assume a white
+       canvas and fail dark-theme text. */
+    background-color: var(--color-background);
   }
 
   main > :first-child {
