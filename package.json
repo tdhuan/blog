@@ -12,6 +12,7 @@
     "astro": "astro",
     "check": "astro check",
     "check:watch": "astro check --watch",
+    "test:a11y": "astro build && playwright test",
     "format": "prettier . -c --write",
     "format:check": "prettier . --check"
   },
@@ -24,6 +25,8 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.62.1",
     "@typescript-eslint/parser": "8.67.0",
     "astro-eslint-parser": "3.0.0",
     "eslint": "^10.8.1",

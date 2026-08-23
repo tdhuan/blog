@@ -147,3 +147,7 @@ vite.config.ts.timestamp-*
 
 # Superpowers SDD workspace (per-plan scratch)
 .superpowers/
+
+# Playwright
+test-results/
+playwright-report/
