@@ -209,6 +209,7 @@ html[data-theme="dark"] .background-drop {
 
   body {
     overscroll-behavior: none;
+    background-color: var(--color-background);
   }
 
   main > :first-child {
