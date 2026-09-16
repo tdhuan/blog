@@ -1,26 +1,61 @@
-<article
-  class="group gap-gutter hover:bg-accent-soft/10 flex flex-col items-start px-3 py-10 md:flex-row md:py-12"
->
-  <div class="w-32 shrink-0 pt-1">
-    <span class="text-on-background-faint font-mono text-xs uppercase"
-      >Engineering</span
-    >
-  </div>
-  <div class="text-primary grow">
-    <h3
-      class="group-hover:text-on-background-faint mb-3 font-serif text-2xl leading-tight font-semibold transition-colors md:text-3xl"
-    >
-      A practical guide to container queries in CSS
-    </h3>
-    <p class="max-w-2xl font-sans text-sm lg:text-base">
-      Moving beyond media queries for truly modular components. Everything you
-      need to start building responsive layouts the right way.
-    </p>
-  </div>
-  <div
-    class="text-primary flex w-full flex-row justify-between pt-1 md:w-auto md:flex-col md:items-end md:text-right"
+---
+interface Props {
+  title: string;
+  href: string;
+  pubDate: Date;
+  description?: string;
+  kicker?: string;
+  readingMinutes?: number | null;
+}
+
+const {
+  title,
+  href,
+  pubDate,
+  description,
+  kicker,
+  readingMinutes: minutes,
+} = Astro.props;
+
+const dateLabel = pubDate.toLocaleDateString("en-US", {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+});
+---
+
+<a class="block" href={href}>
+  <article
+    class="group gap-gutter hover:bg-accent-soft/10 flex flex-col items-start px-3 py-10 md:flex-row md:py-12"
   >
-    <time class="font-mono text-xs" datetime="2025-08-10">Aug 10, 2025</time>
-    <span class="font-mono text-xs">12 min</span>
-  </div>
-</article>
+    {
+      kicker && (
+        <div class="w-32 shrink-0 pt-1">
+          <span class="text-on-background-faint font-mono text-xs uppercase">
+            {kicker}
+          </span>
+        </div>
+      )
+    }
+    <div class="text-primary grow">
+      <h3
+        class="group-hover:text-on-background-faint mb-3 font-serif text-2xl leading-tight font-semibold transition-colors md:text-3xl"
+      >
+        {title}
+      </h3>
+      {
+        description && (
+          <p class="max-w-2xl font-sans text-sm lg:text-base">{description}</p>
+        )
+      }
+    </div>
+    <div
+      class="text-primary flex w-full flex-row justify-between gap-4 pt-1 md:w-auto md:flex-col md:items-end md:text-right"
+    >
+      <time class="font-mono text-xs" datetime={pubDate.toISOString()}>
+        {dateLabel}
+      </time>
+      {minutes != null && <span class="font-mono text-xs">{minutes} min</span>}
+    </div>
+  </article>
+</a>
