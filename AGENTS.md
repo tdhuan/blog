@@ -37,7 +37,7 @@ Static Astro site (no SSR, no UI-framework integrations). Everything is `.astro`
 - `src/layouts/Layout.astro` — the single layout every page uses. Owns `<head>`, Google Fonts loading, the `Header`/`Footer` chrome, and the fixed noise `background-drop` layer. Takes `title`, `bodyClass`, `bodyStyle`, `mainClass` props.
 - `src/components/` — shared Astro components. `SectionHeading` takes a `rule` prop (default `true`) for the trailing rule line — the CV keeps it, the About page passes `rule={false}` for plain headings.
 - `src/data/cv.ts` — single source of truth for CV content; `cv.astro` renders it on screen and in print/PDF (the "Download" button opens the browser print dialog). Edit CV content here only.
-- `src/content/` — Markdown entries for the `blog`, `notes`, and `til` collections, defined in `src/content.config.ts` (Zod schemas; `blog` requires `description`). `src/utils/collection.ts` filters drafts (dev-only) and sorts by `pubDate` desc; `src/utils/reading-time.ts` computes display reading time. Add posts by dropping `.md` files here — never hardcode entries in pages.
+- `src/content/` — Markdown entries for the `blog`, `notes`, and `til` collections, defined in `src/content.config.ts` (Zod schemas; `blog` requires `description`). `src/utils/collection.ts` filters drafts (dev-only) and sorts by `pubDate` desc; `src/utils/reading-time.ts` computes display reading time. Add posts by dropping `.md` files here — never hardcode entries in pages. Keep entry files flat (one folder level) — the `[id]` routes match a single URL segment, so nested folders would break route generation.
 - Imports use the `@/` alias for `src/*` (configured in tsconfig.json).
 
 ### Styling
