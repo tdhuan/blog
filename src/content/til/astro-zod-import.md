@@ -1,6 +1,7 @@
 ---
 title: "Zod comes from astro/zod"
 pubDate: 2026-09-10
+tags: ["astro"]
 ---
 
 When defining content collection schemas, `z` is imported from `astro/zod`,

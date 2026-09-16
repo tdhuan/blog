@@ -1,6 +1,7 @@
 ---
 title: "On small tools"
 pubDate: 2026-08-20
+tags: ["tools"]
 ---
 
 I keep coming back to the same realization: the tools that stick around are

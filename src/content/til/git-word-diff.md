@@ -1,6 +1,7 @@
 ---
 title: "git diff has a word mode"
 pubDate: 2026-08-02
+tags: ["git"]
 ---
 
 `git diff --word-diff` highlights changed words inside a changed line instead

@@ -1,6 +1,7 @@
 ---
 title: "Slow mornings"
 pubDate: 2026-07-15
+tags: ["life"]
 ---
 
 The best change I made to my mornings wasn't waking up earlier — it was
