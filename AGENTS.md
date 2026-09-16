@@ -33,10 +33,11 @@ When implementing Astro-specific code:
 
 Static Astro site (no SSR, no UI-framework integrations). Everything is `.astro` components:
 
-- `src/pages/` — file-based routing (`index`, `blog`, `notes`, `about`, `cv`). `blog`/`notes` are placeholders; no content collections set up yet. `about` is a fully-built editorial page — hero plus hairline-divided sections; its copy lives directly in the page file (unlike the CV, which renders from `src/data/cv.ts`).
+- `src/pages/` — file-based routing (`index`, `blog`, `notes`, `til`, `about`, `cv`). `blog`/`notes`/`til` are list pages rendering content collections from `src/content/<name>/`; each has an `[id].astro` detail route delegating to the shared `ArticlePage` component. `about` is a fully-built editorial page — hero plus hairline-divided sections; its copy lives directly in the page file (unlike the CV, which renders from `src/data/cv.ts`).
 - `src/layouts/Layout.astro` — the single layout every page uses. Owns `<head>`, Google Fonts loading, the `Header`/`Footer` chrome, and the fixed noise `background-drop` layer. Takes `title`, `bodyClass`, `bodyStyle`, `mainClass` props.
 - `src/components/` — shared Astro components. `SectionHeading` takes a `rule` prop (default `true`) for the trailing rule line — the CV keeps it, the About page passes `rule={false}` for plain headings.
 - `src/data/cv.ts` — single source of truth for CV content; `cv.astro` renders it on screen and in print/PDF (the "Download" button opens the browser print dialog). Edit CV content here only.
+- `src/content/` — Markdown entries for the `blog`, `notes`, and `til` collections, defined in `src/content.config.ts` (Zod schemas; `blog` requires `description`). `src/utils/collection.ts` filters drafts (dev-only) and sorts by `pubDate` desc; `src/utils/reading-time.ts` computes display reading time. Add posts by dropping `.md` files here — never hardcode entries in pages.
 - Imports use the `@/` alias for `src/*` (configured in tsconfig.json).
 
 ### Styling
