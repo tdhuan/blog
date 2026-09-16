@@ -1,7 +1,35 @@
 ---
+import { getPublishedEntries } from "@/utils/collection";
+import { readingMinutes } from "@/utils/reading-time";
+import PostCard from "@/components/PostCard.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
 import Layout from "@/layouts/Layout.astro";
+
+const posts = await getPublishedEntries("blog");
 ---
 
 <Layout title="Blog | Huan Tran">
-  <div>Blog</div>
+  <section class="container-page py-16 sm:py-24">
+    <SectionHeading id="blog">Blog</SectionHeading>
+    {
+      posts.length === 0 ? (
+        <p class="text-on-background-muted pt-10 font-sans">
+          Nothing here yet.
+        </p>
+      ) : (
+        <div class="divide-outline-variant/30 mt-10 flex flex-col divide-y">
+          {posts.map((post) => (
+            <PostCard
+              title={post.data.title}
+              href={`/blog/${post.id}`}
+              pubDate={post.data.pubDate}
+              description={post.data.description}
+              kicker={post.data.tags[0]}
+              readingMinutes={readingMinutes(post.body)}
+            />
+          ))}
+        </div>
+      )
+    }
+  </section>
 </Layout>
