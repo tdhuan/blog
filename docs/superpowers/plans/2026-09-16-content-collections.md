@@ -28,6 +28,7 @@
 ### Task 1: Content collections config + seed entries
 
 **Files:**
+
 - Create: `src/content.config.ts`
 - Create: `src/content/blog/container-queries.md`
 - Create: `src/content/blog/astro-content-collections.md` (this one is a draft)
@@ -37,6 +38,7 @@
 - Create: `src/content/til/git-word-diff.md`
 
 **Interfaces:**
+
 - Consumes: nothing (first task).
 - Produces: collections `blog`, `notes`, `til` queryable via `getCollection("blog" | "notes" | "til")` (used from Task 2 on). Frontmatter shape: `title: string`, `pubDate: Date`, `tags: string[]` (default `[]`), `draft: boolean` (default `false`), `description: string` (required in `blog`, optional elsewhere).
 
@@ -91,7 +93,7 @@ enough when pages were one fixed column of content. It stops being enough the
 moment a component can appear in different contexts — a card in a wide feed, the
 same card in a sidebar, the same card in a grid cell that spans two columns.
 
-A container query asks a better question: how much room does *this component*
+A container query asks a better question: how much room does _this component_
 have? The answer belongs to the component, not the page.
 
 ## The two pieces
@@ -202,6 +204,7 @@ from the built site, no flag to remember at deploy time.
 ---
 title: "On small tools"
 pubDate: 2026-08-20
+tags: ["tools"]
 ---
 
 I keep coming back to the same realization: the tools that stick around are
@@ -219,6 +222,7 @@ have today, and then quietly keep solving it for years.
 ---
 title: "Slow mornings"
 pubDate: 2026-07-15
+tags: ["life"]
 ---
 
 The best change I made to my mornings wasn't waking up earlier — it was
@@ -233,6 +237,7 @@ one that reliably belongs to me.
 ---
 title: "Zod comes from astro/zod"
 pubDate: 2026-09-10
+tags: ["astro"]
 ---
 
 When defining content collection schemas, `z` is imported from `astro/zod`,
@@ -246,6 +251,7 @@ the runtime that validates them can never drift apart.
 ---
 title: "git diff has a word mode"
 pubDate: 2026-08-02
+tags: ["git"]
 ---
 
 `git diff --word-diff` highlights changed words inside a changed line instead
@@ -277,10 +283,12 @@ git commit -m "feat: add blog, notes, til content collections with seed entries"
 ### Task 2: Query + reading-time utils
 
 **Files:**
+
 - Create: `src/utils/collection.ts`
 - Create: `src/utils/reading-time.ts`
 
 **Interfaces:**
+
 - Consumes: the `blog`/`notes`/`til` collections from Task 1.
 - Produces (used by Tasks 3–7):
   - `type SectionKey = "blog" | "notes" | "til"` (from `@/utils/collection`)
@@ -321,9 +329,7 @@ export async function getPublishedEntries<C extends SectionKey>(
  * Reading time for a raw Markdown body. ~200 wpm is the usual
  * silent-reading estimate; under two minutes isn't worth a label.
  */
-export function readingMinutes(
-  body: string | null | undefined,
-): number | null {
+export function readingMinutes(body: string | null | undefined): number | null {
   if (!body) {
     return null;
   }
@@ -350,10 +356,12 @@ git commit -m "feat: add collection query and reading-time utils"
 ### Task 3: PostCard props refactor + homepage wiring
 
 **Files:**
+
 - Modify: `src/components/PostCard.astro` (full rewrite — was hardcoded demo markup)
 - Modify: `src/pages/index.astro` (full rewrite of frontmatter + posts section)
 
 **Interfaces:**
+
 - Consumes: `getPublishedEntries`, `readingMinutes` (Task 2).
 - Produces: `PostCard` with `interface Props { title: string; href: string; pubDate: Date; description?: string; kicker?: string; readingMinutes?: number | null }` — used by Tasks 4 and 5.
 
@@ -400,7 +408,9 @@ const dateLabel = pubDate.toLocaleDateString("en-US", {
       )
     }
     <div class="text-primary grow">
-      <h3 class="group-hover:text-on-background-faint mb-3 font-serif text-2xl leading-tight font-semibold transition-colors md:text-3xl">
+      <h3
+        class="group-hover:text-on-background-faint mb-3 font-serif text-2xl leading-tight font-semibold transition-colors md:text-3xl"
+      >
         {title}
       </h3>
       {
@@ -484,9 +494,11 @@ git commit -m "feat: render latest blog posts on homepage"
 ### Task 4: Blog list page
 
 **Files:**
+
 - Modify: `src/pages/blog.astro` (replace the placeholder)
 
 **Interfaces:**
+
 - Consumes: `getPublishedEntries`, `readingMinutes` (Task 2), `PostCard` props (Task 3), `SectionHeading` (existing — requires `id: string`, optional `rule: boolean`, default `true`).
 - Produces: the `/blog` list route.
 
@@ -547,11 +559,13 @@ git commit -m "feat: render blog list from content collection"
 ### Task 5: Notes + TIL list pages, TIL nav item
 
 **Files:**
+
 - Modify: `src/pages/notes.astro` (replace the placeholder)
 - Create: `src/pages/til.astro`
 - Modify: `src/components/Header.astro:5-10` (the `links` array only)
 
 **Interfaces:**
+
 - Consumes: same as Task 4.
 - Produces: `/notes` and `/til` list routes; nav contains `{ href: "/til", label: "TIL" }`.
 
@@ -641,7 +655,7 @@ const posts = await getPublishedEntries("til");
 </Layout>
 ```
 
-(The seed TIL entries are untagged and short, so they render as compact rows — no kicker column, no reading time.)
+(Untagged entries render as compact rows — no kicker column, no reading time; the tagged seed TIL entries show their first tag as the kicker.)
 
 - [ ] **Step 3: Add the TIL nav item in `src/components/Header.astro`**
 
@@ -678,10 +692,12 @@ git commit -m "feat: add notes and til list pages and nav item"
 ### Task 6: ArticlePage component + prose styles
 
 **Files:**
+
 - Create: `src/components/ArticlePage.astro`
 - Modify: `src/styles/global.css` (append one block at end of file)
 
 **Interfaces:**
+
 - Consumes: `SectionKey` (Task 2), `readingMinutes` (Task 2), `render` from `astro:content`, `.prose-article` CSS (this task).
 - Produces: `ArticlePage` with `interface Props { entry: CollectionEntry<SectionKey>; label: string; backHref: string; backLabel: string }` — consumed by all three routes in Task 7.
 
@@ -720,9 +736,11 @@ const dateLabel = entry.data.pubDate.toLocaleDateString("en-US", {
     <p
       class="text-on-background-faint font-mono text-xs font-medium tracking-wide uppercase"
     >
-      {entry.data.tags.length > 0
-            ? `${label} · ${entry.data.tags.join(", ")}`
-            : label}
+      {
+        entry.data.tags.length > 0
+          ? `${label} · ${entry.data.tags.join(", ")}`
+          : label
+      }
     </p>
     <h1
       class="text-primary font-serif text-4xl font-semibold tracking-tight text-balance sm:text-5xl"
@@ -875,11 +893,13 @@ git commit -m "feat: add article template and prose styles"
 ### Task 7: Detail routes
 
 **Files:**
+
 - Create: `src/pages/blog/[id].astro`
 - Create: `src/pages/notes/[id].astro`
 - Create: `src/pages/til/[id].astro`
 
 **Interfaces:**
+
 - Consumes: `getPublishedEntries` (Task 2), `ArticlePage` props (Task 6).
 - Produces: static detail routes `/blog/<id>`, `/notes/<id>`, `/til/<id>`.
 
@@ -976,12 +996,7 @@ const { entry } = Astro.props;
 ---
 
 <Layout title={`${entry.data.title} | Huan Tran`}>
-  <ArticlePage
-    entry={entry}
-    label="TIL"
-    backHref="/til"
-    backLabel="All TIL"
-  />
+  <ArticlePage entry={entry} label="TIL" backHref="/til" backLabel="All TIL" />
 </Layout>
 ```
 
@@ -989,6 +1004,7 @@ const { entry } = Astro.props;
 
 Run: `pnpm check` — expected: no errors.
 Run: `pnpm build` — expected: succeeds. Then:
+
 - `ls dist/blog/` — contains `container-queries/`, does **not** contain `astro-content-collections/` (draft excluded in production).
 - `ls dist/notes/` — contains `on-small-tools/` and `slow-mornings/`.
 - `ls dist/til/` — contains `astro-zod-import/` and `git-word-diff/`.
@@ -1006,9 +1022,11 @@ git commit -m "feat: add blog, notes, til detail pages"
 ### Task 8: Full verification + architecture docs update
 
 **Files:**
+
 - Modify: `CLAUDE.md` (Architecture section only)
 
 **Interfaces:**
+
 - Consumes: everything above.
 - Produces: docs matching reality; the spec's full verification checklist run green.
 
