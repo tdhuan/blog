@@ -247,3 +247,108 @@ html {
       stroke 0.2s ease !important;
   }
 }
+
+/*
+ * Rendered Markdown for article pages (blog/notes/til detail), scoped under
+ * .prose-article so nothing leaks into chrome. Unlayered on purpose: it must
+ * outrank the preflight resets in @layer base. Tokens only — every color
+ * resolves per theme.
+ */
+.prose-article {
+  color: var(--color-on-background);
+  font-size: 1.0625rem;
+  line-height: 1.8;
+}
+
+.prose-article h2,
+.prose-article h3,
+.prose-article h4 {
+  color: var(--color-primary);
+  font-family: var(--font-serif);
+  font-weight: 600;
+  line-height: 1.25;
+  margin-block: 2.25em 0.75em;
+}
+
+.prose-article h2 {
+  font-size: 1.75rem;
+}
+
+.prose-article h3 {
+  font-size: 1.375rem;
+}
+
+.prose-article h4 {
+  font-size: 1.125rem;
+}
+
+.prose-article p,
+.prose-article ul,
+.prose-article ol,
+.prose-article blockquote {
+  margin-block-end: 1.25em;
+}
+
+.prose-article ul {
+  list-style: disc;
+  padding-inline-start: 1.5em;
+}
+
+.prose-article ol {
+  list-style: decimal;
+  padding-inline-start: 1.5em;
+}
+
+.prose-article li {
+  margin-block-end: 0.5em;
+}
+
+.prose-article a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.prose-article a:hover {
+  opacity: 0.8;
+}
+
+.prose-article blockquote {
+  border-inline-start: 1px solid var(--color-outline-variant);
+  color: var(--color-on-background-muted);
+  font-style: italic;
+  padding-inline-start: 1.25em;
+}
+
+.prose-article code {
+  background: var(--color-surface-muted);
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  padding: 0.15em 0.4em;
+}
+
+.prose-article pre {
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-outline-variant);
+  overflow-x: auto;
+  padding: 1em 1.25em;
+}
+
+.prose-article pre code {
+  background: none;
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  padding: 0;
+}
+
+.prose-article img {
+  height: auto;
+  max-width: 100%;
+}
+
+.prose-article hr {
+  border: 0;
+  border-block-start: 1px solid var(--color-outline-variant);
+  margin-block: 2.5em;
+}

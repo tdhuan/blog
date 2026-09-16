@@ -1,0 +1,59 @@
+---
+import { render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import type { SectionKey } from "@/utils/collection";
+import { readingMinutes } from "@/utils/reading-time";
+
+interface Props {
+  entry: CollectionEntry<SectionKey>;
+  label: string;
+  backHref: string;
+  backLabel: string;
+}
+
+const { entry, label, backHref, backLabel } = Astro.props;
+
+// render()'s generated types key on a literal collection name; all three
+// sections are Markdown collections, so this cast is type-level only.
+const { Content } = await render(entry as CollectionEntry<"blog">);
+
+const minutes = readingMinutes(entry.body);
+const dateLabel = entry.data.pubDate.toLocaleDateString("en-US", {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+});
+---
+
+<article class="container-page max-w-3xl py-16 sm:py-24">
+  <header class="flex flex-col items-start gap-4">
+    <p
+      class="text-on-background-faint font-mono text-xs font-medium tracking-wide uppercase"
+    >
+      {
+        entry.data.tags.length > 0
+          ? `${label} · ${entry.data.tags.join(", ")}`
+          : label
+      }
+    </p>
+    <h1
+      class="text-primary font-serif text-4xl font-semibold tracking-tight text-balance sm:text-5xl"
+    >
+      {entry.data.title}
+    </h1>
+    <p class="text-primary flex gap-4 font-mono text-xs">
+      <time datetime={entry.data.pubDate.toISOString()}>{dateLabel}</time>
+      {minutes != null && <span>{minutes} min read</span>}
+    </p>
+  </header>
+  <hr class="border-outline-variant mt-10 border-t" />
+  <div class="prose-article max-w-2xl pt-10">
+    <Content />
+  </div>
+  <a
+    class="text-primary hover:text-on-background-faint mt-16 inline-block font-mono text-xs tracking-wide uppercase transition-colors"
+    href={backHref}
+  >
+    ← {backLabel}
+  </a>
+</article>
