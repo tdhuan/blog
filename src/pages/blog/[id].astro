@@ -1,0 +1,29 @@
+---
+import type { CollectionEntry } from "astro:content";
+import ArticlePage from "@/components/ArticlePage.astro";
+import Layout from "@/layouts/Layout.astro";
+import { getPublishedEntries } from "@/utils/collection";
+
+export async function getStaticPaths() {
+  const entries = await getPublishedEntries("blog");
+  return entries.map((entry) => ({
+    params: { id: entry.id },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<"blog">;
+}
+
+const { entry } = Astro.props;
+---
+
+<Layout title={`${entry.data.title} | Huan Tran`}>
+  <ArticlePage
+    entry={entry}
+    label="Blog"
+    backHref="/blog"
+    backLabel="All posts"
+  />
+</Layout>
