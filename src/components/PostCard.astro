@@ -18,6 +18,7 @@ const {
 } = Astro.props;
 
 const dateLabel = pubDate.toLocaleDateString("en-US", {
+  timeZone: "UTC",
   month: "short",
   day: "numeric",
   year: "numeric",
@@ -39,7 +40,7 @@ const dateLabel = pubDate.toLocaleDateString("en-US", {
     }
     <div class="text-primary grow">
       <h3
-        class="group-hover:text-on-background-faint mb-3 font-serif text-2xl leading-tight font-semibold transition-colors md:text-3xl"
+        class="group-hover:text-on-background-faint mb-3 font-serif text-2xl leading-tight font-semibold transition-colors motion-reduce:transition-none md:text-3xl"
       >
         {title}
       </h3>

@@ -19,6 +19,7 @@ const { Content } = await render(entry as CollectionEntry<"blog">);
 
 const minutes = readingMinutes(entry.body);
 const dateLabel = entry.data.pubDate.toLocaleDateString("en-US", {
+  timeZone: "UTC",
   month: "short",
   day: "numeric",
   year: "numeric",
@@ -51,7 +52,7 @@ const dateLabel = entry.data.pubDate.toLocaleDateString("en-US", {
     <Content />
   </div>
   <a
-    class="text-primary hover:text-on-background-faint mt-16 inline-block font-mono text-xs tracking-wide uppercase transition-colors"
+    class="text-primary hover:text-on-background-faint mt-16 inline-block font-mono text-xs tracking-wide uppercase transition-colors motion-reduce:transition-none"
     href={backHref}
   >
     ← {backLabel}
