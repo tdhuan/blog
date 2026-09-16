@@ -12,13 +12,13 @@ PostCards to real content and add TIL to the header nav.
 
 ## Decisions (from brainstorming)
 
-| Question | Decision |
-| --- | --- |
-| Detail pages per type? | Yes — all three types get `/blog/[id]`, `/notes/[id]`, `/til/[id]` |
-| Frontmatter | Lean: `title`, `pubDate`, optional `description`/`tags`/`draft`; reading time auto-computed, never hand-written |
-| Homepage cards | Latest 3 published blog posts |
-| Nav | Add TIL: Blog, Notes, TIL, About, CV |
-| Architecture | Approach A — three separate collections, three thin route files, shared components |
+| Question               | Decision                                                                                                        |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Detail pages per type? | Yes — all three types get `/blog/[id]`, `/notes/[id]`, `/til/[id]`                                              |
+| Frontmatter            | Lean: `title`, `pubDate`, optional `description`/`tags`/`draft`; reading time auto-computed, never hand-written |
+| Homepage cards         | Latest 3 published blog posts                                                                                   |
+| Nav                    | Add TIL: Blog, Notes, TIL, About, CV                                                                            |
+| Architecture           | Approach A — three separate collections, three thin route files, shared components                              |
 
 ## Content layer
 
