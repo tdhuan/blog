@@ -70,8 +70,8 @@ export const collections = { blog, notes, til };
 ### Reading time — `src/utils/reading-time.ts`
 
 Plain function over `entry.body` (raw Markdown): word count ÷ 200 wpm, rounded
-up. No dependency. Returns `null` for trivially short content so short notes
-and TIL entries show no reading time at all.
+up. No dependency. Returns `null` when the result would be under 2 minutes, so
+short notes and TIL entries show no reading time at all.
 
 ### Shared query helper — `src/utils/collection.ts`
 
