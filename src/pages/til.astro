@@ -5,14 +5,14 @@ import PostCard from "@/components/PostCard.astro";
 import SectionHeading from "@/components/SectionHeading.astro";
 import Layout from "@/layouts/Layout.astro";
 
-const posts = await getPublishedEntries("notes");
+const posts = await getPublishedEntries("til");
 ---
 
-<Layout title="Notes | Huan Tran">
+<Layout title="TIL | Huan Tran">
   <section class="container-page py-16 sm:py-24">
-    <SectionHeading id="notes">Notes</SectionHeading>
+    <SectionHeading id="til">TIL</SectionHeading>
     <p class="text-on-background-muted mt-4 max-w-2xl font-sans">
-      Short, informal posts — thoughts in progress.
+      Small things I learned, written down so I don't forget them.
     </p>
     {
       posts.length === 0 ? (
@@ -24,7 +24,7 @@ const posts = await getPublishedEntries("notes");
           {posts.map((post) => (
             <PostCard
               title={post.data.title}
-              href={`/notes/${post.id}`}
+              href={`/til/${post.id}`}
               pubDate={post.data.pubDate}
               description={post.data.description}
               kicker={post.data.tags[0]}
